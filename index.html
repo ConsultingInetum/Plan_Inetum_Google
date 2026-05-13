@@ -1,0 +1,4232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inetum × Google Cloud · Plan 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #FFFFFF;
+  --off-white: #F5F5F7;
+  --off-white-2: #FBFBFD;
+  /* === Paleta Inetum brand book === */
+  --black: #232D4B;            /* Strong Blue Inetum — color de texto principal del brand */
+  --gray-1: #8E94A6;           /* tono frío derivado de strong blue */
+  --gray-2: #5A627A;
+  --gray-3: #3A4364;
+  --line: #C7CBD6;
+  --line-soft: #E5E7EC;
+  --blue: #232D4B;             /* Strong Blue Inetum oficial — primario */
+  --inetum: #E20074;           /* Vibrant Magenta Inetum oficial — acento clave */
+  --inetum-soft: #FCE5F1;      /* magenta tinte 10% */
+  --inetum-yellow: #F5F340;    /* Yellow Lemon Inetum oficial */
+  --inetum-yellow-soft: #FBFBCC;
+  --inetum-violet: #5A2E7A;    /* tono intermedio entre azul y magenta del gradiente */
+  /* === Google brand colors (usados solo en logos y guiños puntuales) === */
+  --google-blue: #1A73E8;
+  --google-green: #1E8E3E;
+  --google-red: #D93025;
+  --google-yellow: #F9AB00;
+  --font-display: 'Poppins', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px; /* compensa nav 48px + zoom 0.8 del contenido */
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.47;
+  letter-spacing: -0.022em;
+  overflow-x: hidden;
+}
+
+/* Zoom adaptativo: se ajusta según ancho de pantalla para que siempre quepa bien */
+.zoom-wrap {
+  zoom: 1;
+}
+@media (max-width: 1700px) {
+  .zoom-wrap { zoom: 0.95; }
+}
+@media (max-width: 1400px) {
+  .zoom-wrap { zoom: 0.88; }
+}
+@media (max-width: 1200px) {
+  .zoom-wrap { zoom: 0.80; }
+}
+@media (max-width: 1024px) {
+  .zoom-wrap { zoom: 0.75; }
+}
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 9999; height: 48px;
+  background: rgba(251, 251, 253, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-inner {
+  width: 100%; max-width: 1240px; padding: 0 22px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 100%;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: -0.01em; color: var(--black);
+}
+.brand-inetum { color: var(--inetum); font-weight: 600; }
+.brand-sep { color: var(--gray-1); font-weight: 300; }
+.brand-google { display: inline-flex; font-weight: 500; }
+.brand-google span:nth-child(1){color:#4285F4;}
+.brand-google span:nth-child(2){color:#EA4335;}
+.brand-google span:nth-child(3){color:#FBBC04;}
+.brand-google span:nth-child(4){color:#4285F4;}
+.brand-google span:nth-child(5){color:#34A853;}
+.brand-google span:nth-child(6){color:#EA4335;}
+.nav-links {
+  display: flex; align-items: center; gap: 4px; list-style: none;
+}
+.nav-links a {
+  color: var(--black); text-decoration: none;
+  font-size: 12px; font-weight: 400;
+  padding: 6px 12px; border-radius: 980px;
+  letter-spacing: -0.01em; opacity: 0.86;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-links a.active {
+  opacity: 1; background: rgba(0,0,0,0.06); font-weight: 500;
+}
+.nav-version {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--gray-1); letter-spacing: 0.04em; text-transform: uppercase;
+}
+
+/* ============ SECTION BASE ============ */
+.section {
+  padding: 100px 22px;
+  position: relative;
+}
+.section-inner { max-width: 1240px; margin: 0 auto; }
+.bg-white { background: var(--white); }
+.bg-off { background: var(--off-white); }
+.bg-black { background: #000; color: var(--white); }
+
+/* ============ TYPOGRAPHY ============ */
+.eyebrow {
+  font-family: var(--font-display); font-size: 21px;
+  font-weight: 600; letter-spacing: -0.012em;
+  color: var(--inetum); margin-bottom: 8px;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 600; line-height: 1.0625;
+  letter-spacing: -0.025em; color: var(--black);
+}
+.bg-black .headline { color: var(--white); }
+
+.lead {
+  font-size: 21px; font-weight: 400;
+  line-height: 1.381; letter-spacing: 0.011em;
+  color: var(--gray-3); max-width: 64ch;
+}
+.bg-black .lead { color: rgba(255,255,255,0.7); }
+
+.body {
+  font-size: 17px; font-weight: 400;
+  line-height: 1.47; letter-spacing: -0.022em;
+  color: var(--gray-3);
+}
+
+.mono {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.accent-blue {
+  background: linear-gradient(135deg, #232D4B, #5A2E7A, #E20074);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 88vh;
+  background: var(--white);
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 130px 22px 60px;
+  position: relative; overflow: hidden;
+}
+.hero-content {
+  max-width: 980px; margin: 0 auto;
+  text-align: center; position: relative; z-index: 2;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gray-2); margin-bottom: 28px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.hero-eyebrow::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--google-green); border-radius: 50%;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 7.5vw, 88px);
+  font-weight: 600; line-height: 1.05;
+  letter-spacing: -0.028em; color: var(--black);
+  margin-bottom: 24px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, #232D4B 0%, #5A2E7A 50%, #E20074 100%);
+  -webkit-background-clip: text;
+  background-clip: text; color: transparent;
+}
+.hero-sub {
+  font-size: 22px; font-weight: 400;
+  line-height: 1.33; letter-spacing: 0.009em;
+  color: var(--gray-3);
+  max-width: 680px; margin: 0 auto 56px;
+}
+
+/* HERO BENTO - 3 outcomes en grid */
+.hero-bento {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; max-width: 1240px; margin: 0 auto;
+}
+.hero-bento-card {
+  background: var(--off-white);
+  border-radius: 22px;
+  padding: 36px 28px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.hero-bento-card.dark { background: #232D4B; color: var(--white); }
+.hero-bento-card.accent { background: var(--inetum); color: var(--white); }
+.hero-bento-card.accent-light { background: var(--inetum-soft); }
+
+.hero-bento-value {
+  font-family: var(--font-display);
+  font-size: 72px; font-weight: 700;
+  letter-spacing: -0.028em; line-height: 0.95;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+.hero-bento-value.accent {
+  background: linear-gradient(135deg, #E20074, #5A2E7A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-bento-label {
+  font-size: 17px; font-weight: 600;
+  letter-spacing: -0.022em;
+  color: var(--black);
+  margin-bottom: 10px;
+}
+.hero-bento-card.dark .hero-bento-label,
+.hero-bento-card.accent .hero-bento-label { color: var(--white); }
+
+.hero-bento-text {
+  font-size: 14px; line-height: 1.42;
+  color: var(--gray-2);
+}
+.hero-bento-card.dark .hero-bento-text { color: rgba(255,255,255,0.65); }
+.hero-bento-card.accent .hero-bento-text { color: rgba(255,255,255,0.85); }
+
+/* ============ SECTION HEADER (Apple-style) ============ */
+.section-header {
+  text-align: left;
+  margin-bottom: 56px;
+  max-width: 900px;
+}
+.section-header.center {
+  margin-left: auto; margin-right: auto; text-align: center;
+}
+
+/* ============ 01 ESPECIALIZACIÓN - Bento ============ */
+.spec-bento {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 12px;
+}
+.spec-card {
+  background: var(--off-white);
+  border-radius: 22px;
+  padding: 52px 44px;
+  position: relative;
+  min-height: 480px;
+  display: flex; flex-direction: column;
+}
+.spec-card.dark {
+  background: #232D4B;
+  color: var(--white);
+}
+.spec-card .eyebrow { color: var(--blue); margin-bottom: 12px; }
+.spec-card.dark .eyebrow { color: #2997FF; }
+
+.spec-card h3 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 600; line-height: 1.1;
+  letter-spacing: -0.022em;
+  margin-bottom: 16px;
+  color: var(--black);
+}
+.spec-card.dark h3 { color: var(--white); }
+
+.spec-card .body {
+  margin-bottom: auto;
+}
+.spec-card.dark .body { color: rgba(255,255,255,0.7); }
+
+.spec-status-list {
+  display: flex; flex-direction: column;
+  gap: 0;
+  margin-top: 40px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.spec-card.dark .spec-status-list { border-top-color: rgba(255,255,255,0.1); }
+
+.spec-status-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.spec-card.dark .spec-status-item { border-bottom-color: rgba(255,255,255,0.1); }
+.spec-status-item:last-child { border-bottom: none; }
+
+.spec-status-name {
+  font-size: 15px; font-weight: 500; color: var(--black);
+}
+.spec-card.dark .spec-status-name { color: var(--white); }
+
+.spec-status-badge {
+  font-family: var(--font-mono); font-size: 11px;
+  font-weight: 500; letter-spacing: 0.04em;
+  padding: 4px 12px; border-radius: 980px;
+}
+.badge-ok { background: rgba(30,142,62,0.12); color: var(--google-green); }
+.badge-progress { background: rgba(249,171,0,0.14); color: #B47700; }
+.badge-pool { background: rgba(35,45,75,0.10); color: var(--blue); }
+.spec-card.dark .badge-ok { background: rgba(30,142,62,0.25); color: #30D158; }
+.spec-card.dark .badge-progress { background: rgba(249,171,0,0.20); color: #FFD60A; }
+.spec-card.dark .badge-pool { background: rgba(41,151,255,0.20); color: #2997FF; }
+
+/* ============ CERT CARDS · clean flat ============ */
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cert-card {
+  position: relative;
+  background: var(--white);
+  border-radius: 22px;
+  padding: 36px 36px 28px;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px -6px rgba(15, 23, 42, 0.08),
+    0 24px 48px -12px rgba(15, 23, 42, 0.10);
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cert-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 12px 32px -6px rgba(15, 23, 42, 0.10),
+    0 36px 64px -12px rgba(15, 23, 42, 0.14);
+}
+
+/* HEADER */
+.cert-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+
+.cert-badge {
+  width: 56px; height: 62px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--off-white);
+  border-radius: 12px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+}
+.cert-card.cert-done .cert-badge {
+  background: var(--black);
+  color: var(--white);
+}
+
+/* Burbuja informativa colgando sobre el badge 01 */
+.cert-card.cert-progress { padding-top: 56px; }
+.cert-bubble {
+  position: absolute;
+  top: 14px;
+  left: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 6px 13px 6px 11px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  z-index: 2;
+}
+.cert-bubble-when {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--google-yellow);
+  white-space: nowrap;
+}
+.cert-bubble-when::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--google-yellow);
+  margin-right: 6px;
+}
+.cert-bubble-text {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  font-weight: 600;
+  color: var(--black);
+  white-space: nowrap;
+  border-left: 1px solid var(--line-soft);
+  padding-left: 10px;
+}
+.cert-bubble-text .muted {
+  font-weight: 400;
+  color: var(--gray-2);
+}
+
+.cert-meta { min-width: 0; }
+
+.cert-issuer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  margin-bottom: 10px;
+}
+.cert-google {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  font-size: 12px;
+  color: var(--black);
+  text-transform: none;
+}
+.cert-sep { color: var(--line); }
+.cert-spec {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--gray-3);
+  letter-spacing: -0.003em;
+  text-transform: none;
+}
+
+.cert-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.08;
+  color: var(--black);
+  margin: 2px 0 8px;
+}
+.cert-or {
+  font-weight: 300;
+  color: var(--gray-2);
+  font-style: italic;
+  font-size: 0.85em;
+  padding: 0 2px;
+}
+.cert-sub {
+  font-size: 13px;
+  color: var(--gray-2);
+  letter-spacing: -0.003em;
+}
+
+/* PROGRESS RAIL */
+.cert-progress-rail {
+  background: var(--off-white-2);
+  border-radius: 14px;
+  padding: 16px 18px 14px;
+  margin-bottom: 18px;
+}
+.cert-rail-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.cert-rail-lbl {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  font-weight: 500;
+}
+.cert-rail-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+}
+.cert-rail-val-group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.cert-rail-sep {
+  color: var(--gray-1);
+  font-weight: 300;
+  padding: 0 2px;
+}
+
+.cert-bar {
+  position: relative;
+  height: 6px;
+  background: var(--line-soft);
+  border-radius: 999px;
+  overflow: visible;
+  margin: 4px 0 14px;
+}
+.cert-bar-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: var(--google-blue);
+  border-radius: 999px;
+}
+.cert-bar-fill.cert-bar-over {
+  background: var(--google-green);
+}
+.cert-bar-target {
+  position: absolute;
+  top: -3px; bottom: -3px;
+  width: 2px;
+  background: var(--black);
+  border-radius: 2px;
+  transform: translateX(-1px);
+}
+.cert-bar-over-lbl {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--google-green);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 8px;
+  align-self: center;
+}
+
+.cert-rail-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.cert-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+}
+.cert-pill .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+.cert-pill-warn {
+  background: rgba(249,171,0,0.10);
+  color: #8A5A00;
+}
+.cert-pill-warn .dot { background: var(--google-yellow); }
+.cert-pill-ok {
+  background: rgba(30,142,62,0.10);
+  color: #0F6B2E;
+}
+.cert-pill-ok .dot { background: var(--google-green); }
+.cert-rail-eta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--gray-2);
+  text-transform: uppercase;
+}
+
+/* STATS GRID 2x2 */
+.cert-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line-soft);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.cert-stat {
+  background: var(--off-white-2);
+  padding: 14px 16px 12px;
+  position: relative;
+}
+.cert-stat-num {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+}
+.cert-stat-lbl {
+  font-size: 11.5px;
+  color: var(--gray-2);
+  margin-top: 5px;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+.cert-stat-dot {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+.dot-ok      { background: var(--google-green); }
+.dot-warn    { background: var(--google-yellow); }
+.dot-neutral { background: var(--gray-1); }
+.dot-future  { background: var(--inetum); }
+.dot-blue    { background: var(--google-blue); }
+.dot-violet  { background: var(--inetum-violet); }
+
+/* FOOTER */
+.cert-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2px;
+}
+.cert-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  padding: 5px 12px 5px 10px;
+  border-radius: 999px;
+}
+.cert-seal-warn {
+  background: rgba(249,171,0,0.12);
+  color: #8A5A00;
+}
+.cert-seal-ok {
+  background: var(--black);
+  color: var(--white);
+}
+.cert-foot-cap {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--gray-1);
+  text-transform: uppercase;
+}
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .cert-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .cert-stats { grid-template-columns: 1fr; }
+  .cert-rail-foot { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .cert-bubble {
+    position: static;
+    margin: 0 0 16px;
+    max-width: 100%;
+    white-space: normal;
+  }
+  .cert-bubble-text { white-space: normal; }
+}
+
+/* ============ 02 AS IS → TO BE STICKY ANIMATION ============ */
+.transition-block {
+  position: relative;
+  min-height: 500vh; /* 5 viewports — más espacio para apreciar cada mes y rematar en Dic */
+}
+.transition-sticky {
+  position: sticky;
+  top: 60px; /* 48 / 0.8 — compensa el zoom del wrapper para quedar pegado bajo la nav */
+  height: calc(125vh - 60px); /* (100vh - 48) / 0.8 — altura real igual a 100vh - nav */
+  display: flex;
+  align-items: flex-start; /* anclamos arriba para que el eyebrow nunca quede tapado por la nav */
+  justify-content: center;
+  overflow: hidden;
+  background: var(--white);
+}
+.transition-stage {
+  width: 100%;
+  max-width: 1240px;
+  padding: 40px 22px 80px;
+  margin: 0 auto;
+}
+
+.transition-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.transition-stage-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--inetum);
+  margin-bottom: 32px;
+  text-align: center;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.transition-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.6vw, 56px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  text-align: center;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+.transition-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, #232D4B, #5A2E7A, #E20074);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.transition-numbers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 1100px;
+  margin: 0 auto 48px;
+}
+
+.transition-num-card {
+  background: var(--off-white);
+  border-radius: 18px;
+  padding: 24px 20px;
+  text-align: center;
+  min-height: 140px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.transition-num-card.highlight {
+  background: var(--inetum-soft);
+}
+
+.transition-num-value {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  color: var(--black);
+  margin-bottom: 8px;
+  font-feature-settings: 'tnum' 1;
+  display: inline-block;
+}
+
+.transition-num-card.highlight .transition-num-value {
+  background: linear-gradient(135deg, #232D4B, #E20074);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.transition-num-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.transition-num-sub {
+  font-size: 11px;
+  color: var(--gray-2);
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Bloque F2 nombre: magenta + dashed */
+.timeline-month--f2 .timeline-month-name {
+  color: var(--inetum);
+  opacity: 0.7;
+}
+.timeline-month--f2.passed .timeline-month-name {
+  opacity: 1;
+}
+
+/* ============ TIMELINE HORIZONTAL (THE KEY FEATURE) ============ */
+.timeline-wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 4px;
+}
+
+.timeline-track {
+  position: relative;
+  height: 200px;
+  margin-top: 48px;
+  padding: 0 12px;
+}
+
+/* La línea base: más gruesa, con sombra suave y bordes redondeados generosos */
+.timeline-base {
+  position: absolute;
+  top: 50%;
+  left: 12px; right: 12px;
+  height: 8px;
+  background: linear-gradient(180deg, rgba(199,203,214,0.4) 0%, var(--line-soft) 100%);
+  border-radius: 999px;
+  transform: translateY(-50%);
+  box-shadow:
+    inset 0 1px 2px rgba(15,23,42,0.06),
+    0 1px 0 rgba(255,255,255,0.6);
+  overflow: hidden;
+}
+
+/* Fill Fase 1: navy con gradiente sutil y brillo superior */
+.timeline-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: linear-gradient(180deg, #2d3a5e 0%, var(--blue) 50%, #1a2238 100%);
+  border-radius: 999px 0 0 999px;
+  width: var(--fill, 0%);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.timeline-fill::after {
+  /* Brillo sutil en el borde derecho del fill */
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 24px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18));
+  pointer-events: none;
+}
+
+/* Fill Fase 2: gradiente magenta con shimmer animado para llamar la atención */
+.timeline-fill-f2 {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  height: 100%;
+  width: 0%;
+  background:
+    linear-gradient(90deg,
+      rgba(226,0,116,0) 75%,
+      rgba(226,0,116,0.55) 81%,
+      rgba(226,0,116,0.85) 100%);
+  border-radius: 999px;
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+.timeline-fill-f2::before {
+  /* Shimmer animado en F2 cuando está activa */
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 100%);
+  border-radius: 999px;
+  animation: f2Shimmer 2.4s linear infinite;
+  pointer-events: none;
+}
+@keyframes f2Shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Indicador "ahora" vertical que se mueve */
+.timeline-now {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: var(--now, 0%);
+  width: 2px;
+  z-index: 5;
+  transition: left 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline-now-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgba(226,0,116,0) 0%,
+    rgba(226,0,116,0.7) 20%,
+    rgba(226,0,116,0.7) 80%,
+    rgba(226,0,116,0) 100%);
+  border-radius: 1px;
+}
+
+.timeline-now-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  background: var(--inetum);
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    0 0 0 5px rgba(226,0,116, 0.18),
+    0 4px 16px rgba(226,0,116, 0.45);
+  z-index: 3;
+  animation: nowPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes nowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 5px rgba(226,0,116, 0.18),
+      0 4px 16px rgba(226,0,116, 0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 0 12px rgba(226,0,116, 0.08),
+      0 4px 22px rgba(226,0,116, 0.55);
+  }
+}
+
+.timeline-now-label {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--inetum);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 980px;
+  white-space: nowrap;
+  box-shadow:
+    0 2px 6px rgba(226,0,116, 0.2),
+    0 8px 20px rgba(226,0,116, 0.28);
+}
+
+.timeline-now-label::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--inetum);
+}
+
+/* Hitos de cada mes */
+.timeline-milestones {
+  position: absolute;
+  top: 0; left: 12px; right: 12px; bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr) 1.3fr;
+}
+
+.timeline-month {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Dots de mes: más grandes y con halo cuando pasan */
+.timeline-month::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--white);
+  border: 2.5px solid var(--line);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.timeline-month.passed::before {
+  background: var(--blue);
+  border-color: var(--white);
+  box-shadow:
+    0 0 0 3px rgba(35,45,75,0.12),
+    0 2px 6px rgba(35,45,75,0.2);
+  transform: translate(-50%, -50%) scale(1.05);
+}
+/* Dot del bloque F2: magenta + halo rosa */
+.timeline-month--f2::before {
+  border-color: rgba(226,0,116,0.3);
+  border-style: dashed;
+}
+.timeline-month--f2.passed::before {
+  background: var(--inetum);
+  border-color: var(--white);
+  border-style: solid;
+  box-shadow:
+    0 0 0 3px rgba(226,0,116,0.18),
+    0 2px 8px rgba(226,0,116,0.35);
+}
+
+/* Bloque F2 al final: zona destacada con borde discontinuo en la línea */
+.timeline-month--f2 {
+  position: relative;
+}
+.timeline-month--f2::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 14%;
+  right: -8px;
+  height: 28px;
+  transform: translateY(-50%);
+  border: 1.5px dashed rgba(226,0,116, 0.3);
+  border-radius: 999px;
+  background: rgba(226,0,116, 0.025);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Etiqueta del mes en la línea base */
+.timeline-month-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(50% + 14px));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-1);
+  transition: color 0.3s ease, font-weight 0.3s ease, opacity 0.25s ease;
+  white-space: nowrap;
+}
+
+.timeline-month.passed .timeline-month-name {
+  color: var(--inetum);
+  font-weight: 600;
+}
+
+/* Si el indicador "ahora" está sobre este mes, ocultamos el nombre
+   abajo (ya lo muestra el bocadillo rosa del indicador arriba). */
+.timeline-month.is-current .timeline-month-name {
+  opacity: 0;
+}
+
+/* ============ CHIPS DE EVENTOS — siempre arriba de la línea ============ */
+.timeline-month-events {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + 22px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  z-index: 6;
+}
+.timeline-month.passed .timeline-month-events {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.timeline-event {
+  background: var(--white);
+  border: 1px solid rgba(226,0,116,0.18);
+  border-radius: 999px;
+  padding: 8px 14px 8px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow:
+    0 2px 4px rgba(15,23,42,0.04),
+    0 8px 20px -6px rgba(226,0,116,0.18);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.timeline-event.quiet {
+  border-style: dashed;
+  border-color: var(--line);
+  box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+  background: var(--off-white-2);
+}
+.timeline-event--f2 {
+  border-color: rgba(226,0,116,0.35);
+  border-style: dashed;
+  background: rgba(226,0,116,0.04);
+}
+.timeline-event--f2 .event-num {
+  color: var(--inetum);
+}
+.timeline-event--f2 .event-text {
+  color: var(--inetum);
+}
+
+.event-num {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--inetum);
+  line-height: 1;
+  background: rgba(226,0,116,0.08);
+  padding: 4px 8px;
+  border-radius: 999px;
+  min-width: 24px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.timeline-event.quiet .event-num {
+  background: transparent;
+  color: var(--gray-2);
+}
+
+.event-text {
+  font-size: 12px;
+  color: var(--black);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.timeline-event.quiet .event-text {
+  color: var(--gray-2);
+  font-style: italic;
+}
+
+/* Narrativa contextual */
+.timeline-narrative {
+  margin-top: 56px;
+  margin-bottom: 80px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--gray-3);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 60px;
+  transition: opacity 0.3s ease;
+}
+
+.timeline-narrative strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+.timeline-narrative em {
+  font-style: normal;
+  color: var(--inetum);
+  font-weight: 600;
+}
+
+/* ============ 03 PLAN TO-BE - Bento layout ============ */
+.tobe-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tobe-summary {
+  background: var(--off-white);
+  border-radius: 22px;
+  padding: 44px 40px;
+}
+
+.tobe-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.tobe-summary-item {
+  text-align: center;
+  padding: 16px 8px;
+}
+
+.tobe-summary-val {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+.tobe-summary-item.f1 .tobe-summary-val { color: var(--blue); }
+.tobe-summary-item.f2 .tobe-summary-val { color: var(--inetum-violet); }
+.tobe-summary-item.total .tobe-summary-val { color: var(--inetum); }
+
+.tobe-summary-lbl {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+}
+
+.tobe-summary-sub {
+  font-size: 12px;
+  color: var(--gray-2);
+  margin-top: 2px;
+}
+
+.tobe-fase-headline {
+  background: var(--off-white);
+  color: var(--black);
+  border-radius: 22px;
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tobe-fase-headline .lead {
+  color: var(--gray-3);
+}
+
+/* TO-BE Group cards */
+.tobe-group {
+  margin-top: 56px;
+}
+.tobe-group-header {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 16px;
+}
+.tobe-group-tag {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  color: var(--black);
+}
+.tobe-group-desc {
+  font-size: 14px;
+  color: var(--gray-2);
+}
+
+.tobe-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.tobe-cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+.tobe-card {
+  background: var(--off-white);
+  border-radius: 22px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  display: flex; flex-direction: column;
+}
+
+.tobe-card-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.15;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.tobe-card-perfiles {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.tobe-perfil {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  background: var(--white);
+  color: var(--gray-3);
+  border-radius: 980px;
+}
+
+.tobe-card-numbers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.tobe-num-block {
+  text-align: left;
+}
+.tobe-num-val {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+.tobe-num-val.f1 { color: var(--blue); }
+.tobe-num-val.f2 { color: var(--inetum-violet); }
+.tobe-num-val.zero { color: var(--gray-1); }
+
+.tobe-num-lbl {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+}
+
+.tobe-mini-timeline {
+  display: flex;
+  align-items: end;
+  gap: 3px;
+  margin-top: 16px;
+  height: 40px;
+}
+.tobe-mini-bar {
+  flex: 1;
+  background: var(--blue);
+  border-radius: 2px 2px 0 0;
+  min-height: 3px;
+  opacity: 0.9;
+}
+.tobe-mini-bar.empty {
+  background: rgba(0,0,0,0.08);
+  opacity: 1;
+}
+
+.tobe-mini-months {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  color: var(--gray-1);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ============ 03 PLAN TO-BE · DASHBOARD ============ */
+.dash {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dash-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  font-weight: 500;
+}
+.dash-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--google-blue);
+  display: inline-block;
+}
+
+.dash-panel-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  color: var(--black);
+  margin-top: 4px;
+}
+
+.dash-panel {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 24px 26px;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px -6px rgba(15, 23, 42, 0.08),
+    0 24px 48px -12px rgba(15, 23, 42, 0.10);
+}
+.dash-panel-wide {}
+
+.dash-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.dash-foot {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line-soft);
+  font-size: 13px;
+  color: var(--gray-2);
+  line-height: 1.5;
+}
+.dash-foot strong { color: var(--black); font-weight: 600; }
+
+/* COCKPIT TOP BAR */
+.dash-cockpit {
+  display: grid;
+  grid-template-columns: 1.05fr 2.1fr 1fr;
+  gap: 14px;
+}
+
+.dash-hero-kpi {
+  background: var(--black);
+  color: var(--white);
+  border-radius: 20px;
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    0 8px 24px -6px rgba(15, 23, 42, 0.18),
+    0 24px 48px -12px rgba(15, 23, 42, 0.28);
+}
+.dash-hero-kpi::before {
+  content: "";
+  position: absolute;
+  top: -30%; right: -15%;
+  width: 65%; aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(255,255,255,0.04), transparent 70%);
+  pointer-events: none;
+}
+.dash-hero-kpi .dash-eyebrow {
+  color: rgba(255,255,255,0.55);
+}
+.dash-hero-kpi .dash-dot {
+  background: var(--google-yellow);
+  box-shadow: 0 0 12px rgba(249,171,0,0.7);
+}
+.dash-hero-num {
+  font-family: var(--font-display);
+  font-size: 96px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: var(--white);
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
+}
+.dash-hero-cap {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 6px;
+  letter-spacing: -0.01em;
+}
+.dash-hero-delta {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  position: relative;
+  z-index: 1;
+}
+.dash-hero-delta strong { color: var(--white); font-weight: 600; }
+.delta-arrow {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  background: var(--google-yellow);
+  color: var(--black);
+  border-radius: 50%;
+  font-size: 13px; font-weight: 700;
+}
+
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line-soft);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px -6px rgba(15, 23, 42, 0.08),
+    0 24px 48px -12px rgba(15, 23, 42, 0.10);
+}
+.dash-stat {
+  background: var(--white);
+  padding: 22px 20px 20px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: background 180ms ease;
+}
+.dash-stat:hover {
+  background: var(--off-white-2);
+}
+.dash-stat-lbl {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  font-weight: 500;
+}
+.dash-stat-val {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--black);
+  margin: 14px 0 12px;
+}
+.dash-stat.is-f1 .dash-stat-val { color: var(--google-blue); }
+.dash-stat.is-f2 .dash-stat-val { color: var(--inetum-violet); }
+.dash-stat.is-cover .dash-stat-val { color: var(--inetum); }
+
+.dash-stat-bar {
+  height: 4px;
+  background: var(--line-soft);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.dash-stat-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  transition: width 600ms cubic-bezier(0.4,0,0.2,1);
+}
+.dash-stat-sub {
+  font-size: 11.5px;
+  color: var(--gray-2);
+  letter-spacing: -0.005em;
+}
+
+.dash-claim {
+  background: var(--off-white-2);
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+  padding: 24px 24px;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px -6px rgba(15, 23, 42, 0.06);
+}
+.dash-claim p {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  color: var(--black);
+  margin-top: 10px;
+}
+.dash-claim strong {
+  color: var(--inetum);
+  font-weight: 700;
+}
+
+/* GRID 2 columns: stacked + heatmap */
+.dash-grid-2 {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 14px;
+}
+
+/* Stacked bars by level */
+.dash-legend {
+  display: flex; gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.leg {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+}
+.leg i {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.leg-scale {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--gray-2);
+  text-transform: uppercase;
+}
+.leg-scale i {
+  width: 16px; height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.leg-scale span { margin-left: 6px; }
+
+.dash-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 4px;
+}
+.stack-row {
+  display: flex; flex-direction: column;
+  gap: 8px;
+}
+.stack-lbl {
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.lvl {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--black);
+}
+.lvl-tot {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-2);
+}
+.stack-track {
+  display: flex;
+  height: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 2px;
+}
+.stack-seg {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: filter 180ms ease, transform 180ms ease;
+  cursor: default;
+  min-width: 0;
+}
+.stack-seg span {
+  padding: 0 4px;
+  white-space: nowrap;
+}
+.stack-seg.s0 { background: #8E94A6; }              /* AS IS — gris azulado Inetum */
+.stack-seg.s1 { background: var(--blue); }           /* Fase 1 — Strong Blue Inetum */
+.stack-seg.s2 { background: var(--inetum); }         /* Fase 2 — Magenta Inetum */
+.stack-seg:hover { filter: brightness(1.1); }
+
+/* HEATMAP */
+.heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
+.hm-row {
+  display: grid;
+  grid-template-columns: 110px repeat(6, 1fr);
+  gap: 4px;
+  align-items: center;
+}
+.hm-lbl {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  text-align: right;
+  padding-right: 8px;
+}
+.hm-cell {
+  aspect-ratio: 1.6 / 1;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  cursor: default;
+  position: relative;
+}
+.hm-cell[data-v="0"] { background: var(--line-soft); color: var(--gray-1); }
+.hm-cell[data-v="1"] { background: #C5CADB; color: #232D4B; }
+.hm-cell[data-v="2"] { background: #6F7A99; color: #fff; }
+.hm-cell[data-v="3"] { background: var(--blue); color: #fff; }
+.hm-cell:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 2;
+}
+.hm-axis {
+  display: grid;
+  grid-template-columns: 110px repeat(6, 1fr);
+  gap: 4px;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: var(--gray-1);
+  text-transform: uppercase;
+}
+.hm-axis span { text-align: center; }
+.hm-axis span:first-child { visibility: hidden; }
+
+/* ============ DASH COMPOSE — barra stacked acumulativa con AS IS+F1+F2=302 ============ */
+.dash-compose {
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 22px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.dash-compose-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.dash-compose-sum {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-2);
+  letter-spacing: 0.04em;
+}
+.dash-compose-sum strong {
+  font-family: var(--font-display);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+.dash-compose-bar {
+  display: flex;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  gap: 3px;
+}
+.dash-compose-seg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px 16px;
+  color: var(--white);
+  position: relative;
+  min-width: 0;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+.dash-compose-seg:hover { filter: brightness(1.05); }
+.dash-compose-seg.seg-asis { background: #8E94A6; }
+.dash-compose-seg.seg-f1   { background: var(--blue); }
+.dash-compose-seg.seg-f2   { background: var(--inetum); }
+.dash-compose-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.dash-compose-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  margin-top: 4px;
+  opacity: 0.85;
+  font-weight: 600;
+}
+.dash-compose-people {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 4px;
+}
+.dash-compose-people-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-1);
+  font-weight: 600;
+  padding: 4px 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+}
+.dash-compose-people-val {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--gray-2);
+  letter-spacing: -0.01em;
+}
+.dash-compose-people-val strong {
+  color: var(--inetum);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* ============ LEYENDA con totales por fase ============ */
+.dash-legend--totals .leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-2);
+  letter-spacing: -0.005em;
+}
+.dash-legend--totals .leg i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+.dash-legend--totals .leg strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+  margin-left: 2px;
+}
+.dash-legend--totals .leg--asis i { background: #8E94A6; }
+.dash-legend--totals .leg--f1 i   { background: var(--blue); }
+.dash-legend--totals .leg--f2 i   { background: var(--inetum); }
+
+/* ============ TOGGLE Fase 1 / Fase 2 en panel calendario ============ */
+.dash-toggle {
+  display: inline-flex;
+  background: var(--off-white);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.dash-toggle-btn {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--gray-2);
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease,
+              box-shadow 0.25s ease, transform 0.2s ease;
+}
+.dash-toggle-btn:hover { color: var(--black); }
+.dash-toggle-btn.is-active {
+  background: var(--white);
+  color: var(--black);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(35,45,75,0.10);
+}
+
+.dash-phase-view[hidden] { display: none; }
+.dash-phase-view {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+.dash-phase-view .dash-foot { margin-top: auto; }
+.dash-phase-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--line-soft);
+}
+.dash-phase-meta-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1;
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+.dash-phase-meta-num--f2 { color: var(--inetum); }
+.dash-phase-meta-lbl {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--gray-2);
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+}
+
+/* ============ FASE 2 breakdown — barras horizontales por nivel ============ */
+.f2-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 4px 0 16px;
+}
+.f2-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 48px;
+  gap: 12px;
+  align-items: center;
+}
+.f2-lbl {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  text-align: right;
+  padding-right: 4px;
+}
+.f2-bar-track {
+  height: 12px;
+  background: var(--line-soft);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.f2-bar {
+  height: 100%;
+  background: var(--inetum);
+  border-radius: 6px;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.f2-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-2);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.f2-val--strong {
+  color: var(--inetum);
+  font-size: 15px;
+}
+
+/* FILTERS */
+.dash-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.chip {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 14px 7px 13px;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--gray-3);
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 160ms ease;
+}
+.chip span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--off-white);
+  color: var(--gray-2);
+  padding: 1px 6px;
+  border-radius: 999px;
+  letter-spacing: 0;
+}
+.chip:hover {
+  border-color: var(--gray-2);
+  color: var(--black);
+}
+.chip.active {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--white);
+}
+.chip.active span {
+  background: rgba(255,255,255,0.18);
+  color: var(--white);
+}
+.chip.chip-accent.active {
+  background: var(--inetum);
+  border-color: var(--inetum);
+}
+
+/* TABLE */
+.dash-table {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line-soft);
+}
+.dt-head, .dt-row {
+  display: grid;
+  grid-template-columns: 2.1fr 0.7fr 1.6fr 1.5fr 0.7fr 0.7fr 0.7fr 0.8fr;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.dt-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  font-weight: 500;
+  padding: 12px 4px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.dt-row {
+  font-family: var(--font-display);
+  transition: background 140ms ease, opacity 200ms ease;
+}
+.dt-row:hover {
+  background: var(--white);
+  border-radius: 8px;
+}
+.dt-row.is-hidden {
+  display: none;
+}
+
+.dt-c-name {
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--black);
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap;
+}
+.badge-genai {
+  display: inline-block;
+  background: var(--google-yellow);
+  color: var(--black);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.tag-lvl {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.tag-found { background: rgba(26,115,232,0.1); color: var(--google-blue); }
+.tag-assoc { background: rgba(91,42,134,0.1); color: var(--inetum-violet); }
+.tag-prof  { background: rgba(226,0,116,0.1); color: var(--inetum); }
+
+.dt-c-perf {
+  display: flex; gap: 4px; flex-wrap: wrap;
+}
+.dt-c-perf .p {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  color: var(--gray-3);
+  border-radius: 4px;
+}
+.dt-c-perf.dim-perf {
+  font-family: var(--font-mono);
+  color: var(--gray-1);
+  font-size: 13px;
+}
+
+/* sparkline */
+.dt-c-spark {
+  display: flex; align-items: flex-end;
+  gap: 2px;
+  height: 28px;
+}
+.sk-bar {
+  flex: 1;
+  background: var(--google-blue);
+  border-radius: 2px 2px 0 0;
+  opacity: 0.95;
+  min-height: 2px;
+}
+.sk-bar.empty {
+  background: var(--line-soft);
+  opacity: 1;
+}
+.sk-bar.f2 { background: var(--inetum-violet); }
+.sk-bar.h5  { height: 8%; }
+.sk-bar.h12 { height: 18%; }
+.sk-bar.h15 { height: 22%; }
+.sk-bar.h20 { height: 28%; }
+.sk-bar.h25 { height: 32%; }
+.sk-bar.h40 { height: 50%; }
+.sk-bar.h55 { height: 65%; }
+.sk-bar.h80 { height: 88%; }
+.sk-bar.h100 { height: 100%; }
+
+.dt-c-num {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  color: var(--black);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.dt-c-num.f1 { color: var(--google-blue); }
+.dt-c-num.f2 { color: var(--inetum-violet); }
+.dt-c-num.zero { color: var(--gray-1); }
+.dt-c-num.dim { color: var(--gray-1); font-weight: 400; }
+.dt-c-num.dt-tot {
+  font-weight: 700;
+  color: var(--black);
+}
+
+/* totals row */
+.dt-row.dt-totals {
+  background: var(--black);
+  color: var(--white);
+  border-radius: 12px;
+  margin-top: 8px;
+  padding: 14px 14px;
+  border-bottom: none;
+}
+.dt-row.dt-totals:hover { background: var(--black); }
+.dt-totals .dt-c-name {
+  color: var(--white);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+.dt-totals .dt-c-num { color: var(--white); }
+.dt-totals .dt-c-num.f1 { color: #6FA8F5; }
+.dt-totals .dt-c-num.f2 { color: #C7A6E0; }
+.dt-totals .dt-c-num.dt-tot-final {
+  color: var(--google-yellow);
+  font-size: 22px;
+  font-weight: 700;
+}
+.dt-spark-axis {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  height: auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .dash-cockpit { grid-template-columns: 1fr; }
+  .dash-grid-2 { grid-template-columns: 1fr; }
+  .dash-hero-num { font-size: 80px; }
+}
+@media (max-width: 768px) {
+  .dash-stats { grid-template-columns: repeat(2, 1fr); }
+  .dt-head, .dt-row {
+    grid-template-columns: 1.5fr 0.5fr 0.6fr 0.6fr 0.6fr 0.6fr;
+    font-size: 12px;
+  }
+  .dt-c-perf, .dt-c-spark { display: none; }
+  .hm-row, .hm-axis { grid-template-columns: 80px repeat(6, 1fr); }
+  .dash-hero-num { font-size: 64px; }
+}
+
+/* ============ 04 GRUPOS - Bento grid ============ */
+.grupos-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 80px;
+}
+
+.grupo-tile {
+  background: var(--off-white);
+  border-radius: 22px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.grupo-tile:hover { transform: translateY(-4px); }
+
+.grupo-tile-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-1);
+  margin-bottom: 16px;
+}
+
+.grupo-tile-cert {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--black);
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.grupo-tile-tipo {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 980px;
+  align-self: flex-start;
+  margin-bottom: 16px;
+}
+.tipo-foundational { background: rgba(35,45,75,0.10); color: var(--blue); }
+.tipo-associate { background: rgba(30,142,62,0.10); color: var(--google-green); }
+.tipo-professional { background: rgba(226,0,116,0.10); color: var(--inetum); }
+
+.grupo-tile-stats {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 16px;
+}
+
+.grupo-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.grupo-stat-val {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.018em;
+  line-height: 1;
+  color: var(--black);
+}
+.grupo-stat-lbl {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-1);
+}
+
+
+/* ============ 05 KT2RAG ============ */
+/* Sección compactada: un solo cabecero unificado + strip de credenciales + 3 cards */
+.kt-section { padding-top: 88px; padding-bottom: 88px; }
+
+.kt-hero {
+  text-align: center; max-width: 880px;
+  margin: 0 auto 40px;
+}
+.kt-hero .eyebrow { color: var(--inetum); margin-bottom: 14px; }
+.kt-hero h2 { margin-bottom: 18px; }
+.kt-hero .lead { margin: 0 auto; max-width: 640px; }
+
+/* Strip horizontal compacto — sustituye el bento de 4 tiles oscuro */
+.kt-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--white);
+  border-radius: 18px;
+  padding: 22px 32px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+  border: 1px solid var(--line-soft);
+}
+.kt-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.kt-strip-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.kt-strip-num--text {
+  font-size: 22px;
+  letter-spacing: -0.022em;
+  color: var(--inetum);
+}
+.kt-strip-unit {
+  font-size: 0.55em;
+  font-weight: 600;
+  color: var(--gray-2);
+  margin-left: 1px;
+}
+.kt-strip-lbl {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--gray-2);
+  letter-spacing: -0.005em;
+}
+.kt-strip-sep {
+  width: 1px;
+  align-self: stretch;
+  background: var(--line-soft);
+  flex-shrink: 0;
+}
+
+.kt-tesis-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  margin-bottom: 0;
+  align-items: stretch;
+}
+.kt-tesis-card {
+  background: var(--white);
+  padding: 36px 32px 28px;
+  display: flex; flex-direction: column;
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+}
+.kt-tesis-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px -8px rgba(15,23,42,0.16);
+}
+
+/* Variantes — la dark va al centro para anclar la mirada */
+.kt-tesis-card--dark {
+  background: #232D4B;
+  color: var(--white);
+}
+.kt-tesis-card--accent {
+  background: linear-gradient(155deg, #FBFBFD 0%, #FBFBFD 60%, var(--inetum-soft) 100%);
+}
+
+/* Top: número 01/02/03 + tag de categoría */
+.kt-tesis-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.kt-tesis-num {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+}
+.kt-tesis-card--dark .kt-tesis-num { color: var(--white); }
+.kt-tesis-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gray-2);
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.kt-tesis-tag--dark {
+  color: rgba(255,255,255,0.7);
+  border-color: rgba(255,255,255,0.2);
+}
+.kt-tesis-tag--accent {
+  color: var(--inetum);
+  border-color: rgba(226,0,116,0.3);
+  background: rgba(255,255,255,0.6);
+}
+
+/* Headline de cada mensaje */
+.kt-tesis-head {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  color: var(--black);
+  margin: 0 0 14px;
+  /* Forzar altura coherente entre cards: 3 líneas mínimo de espacio */
+  min-height: 3.6em;
+  display: flex;
+  align-items: flex-start;
+}
+.kt-tesis-card--dark .kt-tesis-head { color: var(--white); }
+
+/* Body — texto de soporte */
+.kt-tesis-body {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--gray-2);
+  margin: 0 0 24px;
+  flex: 1;
+}
+.kt-tesis-card--dark .kt-tesis-body { color: rgba(255,255,255,0.65); }
+
+/* Footer con stats — anclas de datos */
+.kt-tesis-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-soft);
+}
+.kt-tesis-card--dark .kt-tesis-foot {
+  border-top-color: rgba(255,255,255,0.12);
+}
+.kt-tesis-stat {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  color: var(--gray-2);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.kt-tesis-stat::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--inetum);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transform: translateY(-2px);
+}
+.kt-tesis-stat strong {
+  color: var(--black);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.kt-tesis-card--dark .kt-tesis-stat { color: rgba(255,255,255,0.6); }
+.kt-tesis-card--dark .kt-tesis-stat strong { color: var(--white); }
+.kt-tesis-card--dark .kt-tesis-stat::before { background: #FBBC04; }
+.kt-tesis-card--accent .kt-tesis-stat::before { background: var(--inetum); }
+
+/* ============ 06 INICIATIVAS - Bento grid ============ */
+.init-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+
+/* === Tarjeta base — Apple App Store / iCloud === */
+.init-card {
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 22px;
+  padding: 32px 30px 26px;
+  position: relative;
+  min-height: 300px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.02),
+    0 4px 16px -2px rgba(0,0,0,0.04),
+    0 12px 32px -8px rgba(0,0,0,0.05);
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+  cursor: pointer;
+}
+
+/* Hover App Store: escala elástica + sombra que crece hacia abajo (elevación flotante) */
+.init-card:hover {
+  transform: translateY(-6px) scale(1.012);
+  border-color: rgba(0,0,0,0.06);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.03),
+    0 8px 24px -2px rgba(35,45,75,0.08),
+    0 24px 56px -8px rgba(35,45,75,0.12),
+    0 40px 80px -16px rgba(35,45,75,0.08);
+}
+
+/* Marca de agua del número: gris frío neutro siempre, sutilmente más visible en hover */
+.init-card::after {
+  content: attr(data-num);
+  position: absolute;
+  bottom: -40px;
+  right: -8px;
+  font-family: var(--font-display);
+  font-size: 210px;
+  font-weight: 700;
+  line-height: 0.8;
+  color: var(--black);
+  opacity: 0.025;
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.init-card:hover::after {
+  opacity: 0.05;
+  transform: translateY(-8px);
+}
+
+/* Sin barra/accent: estilo App Store es flat */
+.init-accent {
+  display: none;
+}
+
+/* === Asignación de color por card === */
+.init-card--c1 {
+  --c-accent: #E20074;
+  --c-accent-soft: rgba(226,0,116,0.30);
+  --c-shadow: rgba(226,0,116,0.22);
+}
+.init-card--c2 {
+  --c-accent: #232D4B;
+  --c-accent-soft: rgba(35,45,75,0.30);
+  --c-shadow: rgba(35,45,75,0.24);
+}
+.init-card--c3 {
+  --c-accent: #5A2E7A;
+  --c-accent-soft: rgba(90,46,122,0.30);
+  --c-shadow: rgba(90,46,122,0.22);
+}
+.init-card--c4 {
+  --c-accent: #B89D00;       /* yellow ajustado para legibilidad */
+  --c-accent-soft: rgba(184,157,0,0.35);
+  --c-shadow: rgba(184,157,0,0.20);
+}
+.init-card--c5 {
+  --c-accent: #1A73E8;
+  --c-accent-soft: rgba(26,115,232,0.25);
+  --c-shadow: rgba(26,115,232,0.22);
+}
+.init-card--c6 {
+  --c-accent: #B40060;
+  --c-accent-soft: rgba(180,0,96,0.30);
+  --c-shadow: rgba(180,0,96,0.22);
+}
+
+/* === Header: icono + tag === */
+.init-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 2;
+}
+.init-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-accent-soft, rgba(35,45,75,0.08));
+  border: none;
+  border-radius: 12px;
+  flex-shrink: 0;
+  position: relative;
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.4s ease;
+}
+.init-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--c-accent, var(--inetum));
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.4s ease, transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.init-card:hover .init-icon {
+  transform: scale(1.08) rotate(-4deg);
+  background: var(--c-accent, var(--inetum));
+}
+.init-card:hover .init-icon svg {
+  stroke: var(--white);
+}
+
+.init-tag {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: #6E6E73;
+  margin: 0;
+  text-transform: none;
+}
+.init-tag-num {
+  color: var(--c-accent, var(--inetum));
+  font-weight: 600;
+  margin-right: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.init-link {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-transform: none;
+  color: var(--gray-2);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(35,45,75,0.06);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+}
+.init-link:hover {
+  background: var(--c-accent, var(--inetum));
+  color: var(--white);
+  transform: scale(1.04);
+}
+.init-link svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.init-link:hover svg {
+  transform: translate(1px, -1px);
+}
+
+.init-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.18;
+  color: var(--black);
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.init-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gray-2);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.init-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(35,45,75,0.06);
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  transition: border-color 0.4s ease;
+}
+.init-card:hover .init-stats {
+  border-color: var(--c-accent-soft, rgba(35,45,75,0.08));
+}
+
+/* === Meta-info editorial: bullet de color de card + texto display === */
+.init-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--gray-2);
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+.init-stat::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--c-accent, var(--gray-1));
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.init-card:hover .init-stat {
+  color: var(--gray-3);
+}
+.init-card:hover .init-stat::before {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* === Dato ancla destacado por peso, sin marcador === */
+.init-stat--key {
+  font-weight: 600;
+  color: var(--black);
+}
+
+.init-stat strong {
+  color: var(--c-accent, var(--black));
+  font-weight: 700;
+  margin-right: 4px;
+  font-family: var(--font-display);
+  letter-spacing: -0.012em;
+}
+
+/* === Reveal "En la práctica" — oculto en reposo, glassmorphism flotante en hover === */
+/* Se posiciona desde debajo del título para tapar limpiamente texto + stats === */
+.init-reveal {
+  position: absolute;
+  left: 14px; right: 14px; bottom: 14px;
+  /* top dinámico: el header (icono+tag) mide ~66px, el título ~50px, + paddings */
+  top: 140px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  padding: 20px 22px 22px;
+  border-radius: 16px;
+  border: 1px solid var(--c-accent-soft, rgba(35,45,75,0.06));
+  box-shadow:
+    0 1px 2px rgba(35,45,75,0.04),
+    0 12px 32px -8px rgba(35,45,75,0.14);
+  transform: translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.4s ease;
+}
+.init-card:hover .init-reveal {
+  transform: translateY(0);
+  opacity: 1;
+}
+.init-reveal-lbl {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--c-accent, var(--inetum));
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.init-reveal-lbl::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--c-accent, var(--inetum));
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--c-accent-soft, var(--inetum-soft));
+  flex-shrink: 0;
+}
+.init-reveal-text {
+  font-family: var(--font-display);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gray-3);
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .hero-bento, .transition-numbers, .grupos-bento { grid-template-columns: repeat(2, 1fr); }
+  .spec-bento, .tobe-intro { grid-template-columns: 1fr; }
+  .tobe-cards { grid-template-columns: 1fr 1fr; }
+  .tobe-cards.cols-2 { grid-template-columns: 1fr; }
+  .kt-tesis-grid, .init-grid { grid-template-columns: 1fr; }
+  .pipeline-summary { grid-template-columns: repeat(2, 1fr); }
+  .pipeline-summary-item:nth-child(2) { border-right: none; }
+}
+@media (max-width: 640px) {
+  .hero-bento, .transition-numbers, .grupos-bento { grid-template-columns: 1fr; }
+  .kt-strip { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
+  .kt-strip-sep { display: none; }
+  .kt-strip-item { width: 100%; }
+  .tobe-cards { grid-template-columns: 1fr; }
+}
+
+[data-anim] {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-anim].in-view {
+  opacity: 1; transform: translateY(0);
+}
+
+/* ============ TOOLTIP DE DETALLE ESTILO LOOKER STUDIO ============ */
+.seg-tooltip {
+  position: fixed;
+  z-index: 10000;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  padding: 12px 14px;
+  min-width: 220px;
+  max-width: 300px;
+  font-family: var(--font-display);
+  box-shadow:
+    0 2px 8px rgba(15, 23, 42, 0.08),
+    0 12px 32px -6px rgba(15, 23, 42, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+}
+.seg-tooltip.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Flecha del tooltip */
+.seg-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--white);
+  border-right: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.seg-tooltip[data-pos="above"]::after { bottom: -5px; }
+.seg-tooltip[data-pos="below"]::after {
+  top: -5px;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 1px solid var(--line-soft);
+  border-top: 1px solid var(--line-soft);
+}
+
+.tt-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.tt-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: -0.005em;
+}
+.tt-total {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+}
+.seg-tooltip[data-phase="asis"] .tt-total { color: var(--gray-2); }
+.seg-tooltip[data-phase="f1"] .tt-total { color: var(--blue); }
+.seg-tooltip[data-phase="f2"] .tt-total { color: var(--inetum); }
+
+.tt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  font-size: 12px;
+}
+.tt-row-name {
+  color: var(--gray-2);
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+}
+.tt-row-count {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Indicar que los segmentos son interactivos (hover) */
+.stack-seg[data-modal],
+.dash-compose-seg[data-modal] {
+  cursor: default;
+  transition: filter 0.2s ease;
+}
+.stack-seg[data-modal]:hover,
+.dash-compose-seg[data-modal]:hover {
+  filter: brightness(1.12);
+}
+.stack-seg[data-modal]:focus-visible,
+.dash-compose-seg[data-modal]:focus-visible {
+  outline: 2px solid var(--inetum);
+  outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="brand-inetum">inetum</span>
+      <span class="brand-sep">×</span>
+      <span class="brand-google"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></span>
+      <span style="color:var(--gray-2);margin-left:4px;">Cloud</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#especializacion">Especialización</a></li>
+      <li><a href="#transition">AS IS → TO BE</a></li>
+      <li><a href="#tobe">Plan</a></li>
+      <li><a href="#kt2rag">KT2RAG</a></li>
+      <li><a href="#iniciativas">Iniciativas</a></li>
+    </ul>
+    <div class="nav-version">Plan 2026</div>
+  </div>
+</nav>
+
+<div class="zoom-wrap">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Abril → Diciembre 2026</div>
+    <h1>De partner táctico<br><em>a socio estratégico.</em></h1>
+    <p class="hero-sub">Plan de formación y certificación Google Cloud para escalar Inetum a un tier de partnership superior. En tres mensajes.</p>
+  </div>
+
+  <div class="hero-bento">
+    <div class="hero-bento-card">
+      <div>
+        <div class="hero-bento-value">×3</div>
+        <div class="hero-bento-label">Capacity Professional</div>
+      </div>
+      <div class="hero-bento-text">De 11 a +30 perfiles Professional certificados activos a cierre 2026.</div>
+    </div>
+    <div class="hero-bento-card">
+      <div>
+        <div class="hero-bento-value accent">×8</div>
+        <div class="hero-bento-label">Generative AI Leaders</div>
+      </div>
+      <div class="hero-bento-text">De 4 a 50+ consultores con base GenAI, listos para conversaciones de discovery.</div>
+    </div>
+    <div class="hero-bento-card">
+      <div>
+        <div class="hero-bento-value">+263</div>
+        <div class="hero-bento-label">Certificaciones nuevas</div>
+      </div>
+      <div class="hero-bento-text">De 39 a 302 certificaciones activas. El plan se ejecuta entre mayo y diciembre 2026.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 ESPECIALIZACIÓN - BENTO ============ -->
+<section class="section bg-off" id="especializacion">
+  <div class="section-inner">
+    <div class="section-header" data-anim>
+      <div class="eyebrow">Especialización</div>
+      <h2 class="headline">Hacia la <em style="font-style:normal;" class="accent-blue">Generative AI</em> Specialization.</h2>
+      <p class="lead" style="margin-top:20px;">El sello que distingue a partners capaces de operar Vertex AI en producción. Dos requisitos, doce meses para cerrarlos.</p>
+    </div>
+
+    <div class="cert-grid" data-anim>
+
+      <!-- CARD 1: ML ENGINEER -->
+      <article class="cert-card cert-progress">
+        <div class="cert-bubble">
+          <span class="cert-bubble-when">Junio 2026</span>
+          <span class="cert-bubble-text">Examen oficial · <span class="muted">pool refuerzo Q3</span></span>
+        </div>
+        <header class="cert-head">
+          <div class="cert-badge">01</div>
+          <div class="cert-meta">
+            <div class="cert-issuer">
+              <span class="cert-google">
+                <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC04">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span> Cloud
+              </span>
+              <span class="cert-sep">·</span>
+              <span class="cert-spec">Generative AI Specialization</span>
+            </div>
+            <h3 class="cert-title">Professional<br>ML&nbsp;Engineer</h3>
+            <div class="cert-sub">2 empleados activos · MLOps con Vertex AI</div>
+          </div>
+        </header>
+
+        <div class="cert-progress-rail">
+          <div class="cert-rail-meta">
+            <span class="cert-rail-lbl">Estado del requisito</span>
+            <span class="cert-rail-val">1<span class="cert-rail-sep">/</span>2</span>
+          </div>
+          <div class="cert-bar">
+            <div class="cert-bar-fill" style="width:50%"></div>
+            <div class="cert-bar-target" style="left:100%"></div>
+          </div>
+          <div class="cert-rail-foot">
+            <span class="cert-pill cert-pill-warn"><span class="dot"></span>En progreso · falta&nbsp;1</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2: PDE/PCD -->
+      <article class="cert-card cert-done">
+        <header class="cert-head">
+          <div class="cert-badge">02</div>
+          <div class="cert-meta">
+            <div class="cert-issuer">
+              <span class="cert-google">
+                <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span><span style="color:#FBBC04">o</span><span style="color:#4285F4">g</span><span style="color:#34A853">l</span><span style="color:#EA4335">e</span> Cloud
+              </span>
+              <span class="cert-sep">·</span>
+              <span class="cert-spec">Generative AI Specialization</span>
+            </div>
+            <h3 class="cert-title">Professional Data Engineer<br><span class="cert-or">o</span> Cloud&nbsp;Developer</h3>
+            <div class="cert-sub">4 PDE certificados · cobertura Digital + Tech</div>
+          </div>
+        </header>
+
+        <div class="cert-progress-rail">
+          <div class="cert-rail-meta">
+            <span class="cert-rail-lbl">Estado del requisito</span>
+            <span class="cert-rail-val-group">
+              <span class="cert-bar-over-lbl">×2 sobre el mínimo</span>
+              <span class="cert-rail-val">4<span class="cert-rail-sep">/</span>2</span>
+            </span>
+          </div>
+          <div class="cert-bar">
+            <div class="cert-bar-fill cert-bar-over" style="width:100%"></div>
+            <div class="cert-bar-target" style="left:50%"></div>
+          </div>
+          <div class="cert-rail-foot">
+            <span class="cert-pill cert-pill-ok"><span class="dot"></span>Requisito cumplido</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 TRANSITION: AS IS → TO BE (SCROLL ROLEX) ============ -->
+<div class="transition-block" id="transition">
+  <div class="transition-sticky">
+    <div class="transition-stage">
+      <div class="transition-eyebrow">La transformación 2026</div>
+      <h2 class="transition-title">Así pasa el tiempo<br>en <em>Inetum.</em></h2>
+      <div class="transition-stage-label" id="stage-label">Abril 2026 · Punto de partida</div>
+
+      <!-- 4 KPIs por nivel formativo -->
+      <div class="transition-numbers">
+        <div class="transition-num-card" id="num-card-1">
+          <div class="transition-num-value" id="num-1">13</div>
+          <div class="transition-num-label">Foundational</div>
+          <div class="transition-num-sub" id="sub-1">de 103 al final</div>
+        </div>
+        <div class="transition-num-card" id="num-card-2">
+          <div class="transition-num-value" id="num-2">15</div>
+          <div class="transition-num-label">Associate</div>
+          <div class="transition-num-sub" id="sub-2">de 55 al final</div>
+        </div>
+        <div class="transition-num-card" id="num-card-3">
+          <div class="transition-num-value" id="num-3">11</div>
+          <div class="transition-num-label">Professional</div>
+          <div class="transition-num-sub" id="sub-3">de 144 al final</div>
+        </div>
+        <div class="transition-num-card highlight" id="num-card-4">
+          <div class="transition-num-value" id="num-4">39</div>
+          <div class="transition-num-label">Total certificaciones</div>
+          <div class="transition-num-sub" id="sub-4">de 302 al final</div>
+        </div>
+      </div>
+
+      <!-- TIMELINE HORIZONTAL: Fase 1 (meses sólidos) + Fase 2 (bloque fantasma) -->
+      <div class="timeline-wrap">
+        <!-- Track con los meses -->
+        <div class="timeline-track">
+          <!-- Indicador vertical "ahora" -->
+          <div class="timeline-now" id="timeline-now">
+            <div class="timeline-now-label" id="timeline-now-label">Abril</div>
+            <div class="timeline-now-line"></div>
+            <div class="timeline-now-dot"></div>
+          </div>
+
+          <!-- Línea base de progreso -->
+          <div class="timeline-base">
+            <div class="timeline-fill" id="timeline-fill"></div>
+            <div class="timeline-fill-f2" id="timeline-fill-f2"></div>
+          </div>
+
+          <!-- Hitos Fase 1: 8 meses (sin chips, línea limpia) -->
+          <div class="timeline-milestones">
+            <div class="timeline-month" data-month="0" data-trigger="0.04">
+              <div class="timeline-month-name">Mayo</div>
+            </div>
+            <div class="timeline-month" data-month="1" data-trigger="0.13">
+              <div class="timeline-month-name">Junio</div>
+            </div>
+            <div class="timeline-month" data-month="2" data-trigger="0.22">
+              <div class="timeline-month-name">Julio</div>
+            </div>
+            <div class="timeline-month" data-month="3" data-trigger="0.31">
+              <div class="timeline-month-name">Agosto</div>
+            </div>
+            <div class="timeline-month" data-month="4" data-trigger="0.40">
+              <div class="timeline-month-name">Septiembre</div>
+            </div>
+            <div class="timeline-month" data-month="5" data-trigger="0.49">
+              <div class="timeline-month-name">Octubre</div>
+            </div>
+            <div class="timeline-month" data-month="6" data-trigger="0.58">
+              <div class="timeline-month-name">Noviembre</div>
+            </div>
+            <div class="timeline-month" data-month="7" data-trigger="0.67">
+              <div class="timeline-month-name">Diciembre</div>
+            </div>
+            <!-- Hito Fase 2 al final -->
+            <div class="timeline-month timeline-month--f2" data-month="8" data-trigger="0.85">
+              <div class="timeline-month-name">Fase 2</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Narrativa contextual abajo -->
+        <div class="timeline-narrative" id="timeline-narrative">
+          Desplázate para ver cómo se transforma Inetum, mes a mes.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 03 PLAN TO-BE - Dashboard ============ -->
+<section class="section bg-off" id="tobe">
+  <div class="section-inner">
+    <div class="section-header" data-anim>
+      <div class="eyebrow">El plan en cifras</div>
+      <h2 class="headline">Una hoja de ruta, dos fases,<br><em style="font-style:normal;" class="accent-blue">302 certificaciones.</em></h2>
+      <p class="lead" style="margin-top:20px;">Fase 1 entre mayo y diciembre 2026 construye la base. Fase 2 escala Professional. Estos son los números reales.</p>
+    </div>
+
+    <!-- DASHBOARD COCKPIT -->
+    <div class="dash" data-anim>
+
+      <!-- Top bar: KPI gigante + barra apilada acumulativa + claim -->
+      <div class="dash-cockpit">
+        <div class="dash-hero-kpi">
+          <div class="dash-eyebrow"><span class="dash-dot"></span>Visión agregada · cierre 2026</div>
+          <div class="dash-hero-num">302</div>
+          <div class="dash-hero-cap">certificaciones totales</div>
+          <div class="dash-hero-delta">
+            <span class="delta-arrow">↗</span>
+            <span><strong>+263</strong> sobre AS IS · <strong>7.7×</strong> base</span>
+          </div>
+        </div>
+
+        <!-- Composición acumulativa: AS IS + Fase 1 + Fase 2 = 302 -->
+        <div class="dash-compose">
+          <div class="dash-compose-head">
+            <div class="dash-eyebrow">Composición del total</div>
+          </div>
+          <div class="dash-compose-bar">
+            <div class="dash-compose-seg seg-asis" style="flex:39" data-modal="total-asis" tabindex="0" role="button" aria-label="Ver detalle AS IS total">
+              <span class="dash-compose-num">39</span>
+              <span class="dash-compose-tag">AS IS</span>
+            </div>
+            <div class="dash-compose-seg seg-f1" style="flex:115" data-modal="total-f1" tabindex="0" role="button" aria-label="Ver detalle Fase 1 total">
+              <span class="dash-compose-num">115</span>
+              <span class="dash-compose-tag">FASE 1 · MAY → DIC</span>
+            </div>
+            <div class="dash-compose-seg seg-f2" style="flex:148" data-modal="total-f2" tabindex="0" role="button" aria-label="Ver detalle Fase 2 total">
+              <span class="dash-compose-num">148</span>
+              <span class="dash-compose-tag">FASE 2 · ESCALA</span>
+            </div>
+          </div>
+          <div class="dash-compose-people">
+            <span class="dash-compose-people-tag">Detrás de los números</span>
+            <span class="dash-compose-people-val"><strong>65</strong> profesionales distintos · 10 grupos · 262 inscripciones a curso</span>
+          </div>
+        </div>
+
+        <div class="dash-claim">
+          <div class="dash-eyebrow"><span class="dash-dot" style="background:var(--inetum)"></span>Lo que cambia</div>
+          <p>Cobertura <strong>GenAI completa</strong> antes de cerrar 2026. Escala Professional × <strong>3.6</strong>.</p>
+        </div>
+      </div>
+
+      <!-- Distribución por nivel: stacked bars + leyenda -->
+      <div class="dash-grid-2">
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <div>
+              <div class="dash-eyebrow">Distribución por nivel</div>
+              <h4 class="dash-panel-title">Equilibrio por nivel formativo</h4>
+            </div>
+            <div class="dash-legend dash-legend--totals">
+              <span class="leg leg--asis"><i></i>AS IS <strong>39</strong></span>
+              <span class="leg leg--f1"><i></i>Fase 1 <strong>115</strong></span>
+              <span class="leg leg--f2"><i></i>Fase 2 <strong>148</strong></span>
+            </div>
+          </div>
+          <div class="dash-stack">
+            <div class="stack-row" data-level="Foundational">
+              <div class="stack-lbl"><span class="lvl">Foundational</span><span class="lvl-tot">103</span></div>
+              <div class="stack-track">
+                <div class="stack-seg s0" style="flex:13" data-modal="foundational-asis" tabindex="0" role="button" aria-label="Ver detalle Foundational AS IS"><span>13</span></div>
+                <div class="stack-seg s1" style="flex:90" data-modal="foundational-f1" tabindex="0" role="button" aria-label="Ver detalle Foundational Fase 1"><span>90</span></div>
+              </div>
+            </div>
+            <div class="stack-row" data-level="Associate">
+              <div class="stack-lbl"><span class="lvl">Associate</span><span class="lvl-tot">55</span></div>
+              <div class="stack-track">
+                <div class="stack-seg s0" style="flex:15" data-modal="associate-asis" tabindex="0" role="button" aria-label="Ver detalle Associate AS IS"><span>15</span></div>
+                <div class="stack-seg s1" style="flex:15" data-modal="associate-f1" tabindex="0" role="button" aria-label="Ver detalle Associate Fase 1"><span>15</span></div>
+                <div class="stack-seg s2" style="flex:25" data-modal="associate-f2" tabindex="0" role="button" aria-label="Ver detalle Associate Fase 2"><span>25</span></div>
+              </div>
+            </div>
+            <div class="stack-row" data-level="Professional">
+              <div class="stack-lbl"><span class="lvl">Professional</span><span class="lvl-tot">144</span></div>
+              <div class="stack-track">
+                <div class="stack-seg s0" style="flex:11" data-modal="professional-asis" tabindex="0" role="button" aria-label="Ver detalle Professional AS IS"><span>11</span></div>
+                <div class="stack-seg s1" style="flex:10" data-modal="professional-f1" tabindex="0" role="button" aria-label="Ver detalle Professional Fase 1"><span>10</span></div>
+                <div class="stack-seg s2" style="flex:123" data-modal="professional-f2" tabindex="0" role="button" aria-label="Ver detalle Professional Fase 2"><span>123</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-foot">El esfuerzo Fase 2 se concentra en <strong>Professional</strong>: arquitectura, delivery y operación a escala.</div>
+        </div>
+
+        <!-- Heatmap mensual con toggle Fase 1 / Fase 2 -->
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <div>
+              <div class="dash-eyebrow">Calendario de inscripciones</div>
+              <h4 class="dash-panel-title">Distribución temporal</h4>
+            </div>
+            <div class="dash-toggle" role="tablist" aria-label="Fase a visualizar">
+              <button type="button" class="dash-toggle-btn is-active" data-phase="f1" role="tab" aria-selected="true">Fase 1</button>
+              <button type="button" class="dash-toggle-btn" data-phase="f2" role="tab" aria-selected="false">Fase 2</button>
+            </div>
+          </div>
+
+          <!-- FASE 1 view -->
+          <div class="dash-phase-view" data-phase-view="f1">
+            <div class="dash-phase-meta">
+              <span class="dash-phase-meta-num">115</span>
+              <span class="dash-phase-meta-lbl">inscripciones repartidas en 8 meses · May → Dic 2026</span>
+            </div>
+            <div class="heatmap">
+              <div class="hm-row">
+                <div class="hm-lbl">Foundational</div>
+                <div class="hm-cell" data-v="3" title="Mayo · 30"><span>30</span></div>
+                <div class="hm-cell" data-v="1" title="Junio · 5"><span>5</span></div>
+                <div class="hm-cell" data-v="0" title="Julio · 0"><span>·</span></div>
+                <div class="hm-cell" data-v="1" title="Agosto · 8"><span>8</span></div>
+                <div class="hm-cell" data-v="0" title="Octubre · 0"><span>·</span></div>
+                <div class="hm-cell" data-v="2" title="Diciembre · 12"><span>12</span></div>
+              </div>
+              <div class="hm-row">
+                <div class="hm-lbl">Associate</div>
+                <div class="hm-cell" data-v="0"><span>·</span></div>
+                <div class="hm-cell" data-v="2"><span>15</span></div>
+                <div class="hm-cell" data-v="0"><span>·</span></div>
+                <div class="hm-cell" data-v="1"><span>6</span></div>
+                <div class="hm-cell" data-v="0"><span>·</span></div>
+                <div class="hm-cell" data-v="1"><span>1</span></div>
+              </div>
+              <div class="hm-row">
+                <div class="hm-lbl">Professional</div>
+                <div class="hm-cell" data-v="0"><span>·</span></div>
+                <div class="hm-cell" data-v="3"><span>20</span></div>
+                <div class="hm-cell" data-v="1"><span>3</span></div>
+                <div class="hm-cell" data-v="0"><span>·</span></div>
+                <div class="hm-cell" data-v="0"><span>·</span></div>
+                <div class="hm-cell" data-v="2"><span>15</span></div>
+              </div>
+              <div class="hm-axis">
+                <span>·</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AGO</span><span>OCT</span><span>DIC</span>
+              </div>
+            </div>
+            <div class="dash-foot"><strong>Junio</strong> concentra el pico de arranque · Mayo y Diciembre actúan como hitos de cierre.</div>
+          </div>
+
+          <!-- FASE 2 view -->
+          <div class="dash-phase-view" data-phase-view="f2" hidden>
+            <div class="dash-phase-meta">
+              <span class="dash-phase-meta-num dash-phase-meta-num--f2">148</span>
+              <span class="dash-phase-meta-lbl">objetivo de escala · concentrado en Professional</span>
+            </div>
+            <div class="f2-breakdown">
+              <div class="f2-row">
+                <div class="f2-lbl">Foundational</div>
+                <div class="f2-bar-track"><div class="f2-bar" style="width:0%"></div></div>
+                <div class="f2-val">0</div>
+              </div>
+              <div class="f2-row">
+                <div class="f2-lbl">Associate</div>
+                <div class="f2-bar-track"><div class="f2-bar" style="width:20%"></div></div>
+                <div class="f2-val">25</div>
+              </div>
+              <div class="f2-row">
+                <div class="f2-lbl">Professional</div>
+                <div class="f2-bar-track"><div class="f2-bar" style="width:100%"></div></div>
+                <div class="f2-val f2-val--strong">123</div>
+              </div>
+            </div>
+            <div class="dash-foot"><strong>Professional</strong> concentra el 83% de Fase 2 · arquitectura, delivery y operación a escala.</div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <!-- /DASHBOARD -->
+
+  </div>
+</section>
+
+<!-- ============ 05 KT2RAG ============ -->
+<section class="section bg-off kt-section" id="kt2rag">
+  <div class="section-inner">
+    <div class="kt-hero" data-anim>
+      <div class="eyebrow">KT2RAG · Asset propio sobre GCP</div>
+      <h2 class="headline">Tres razones para apostar<br>por <em style="font-style:normal;" class="accent-blue">Inetum en GCP.</em></h2>
+      <p class="lead">Más allá del plan de formación, traemos un asset construido íntegramente sobre Google Cloud. La prueba operativa de que el compromiso es real.</p>
+    </div>
+
+    <!-- Strip compacto de credenciales — anclas factuales antes de los 3 mensajes -->
+    <div class="kt-strip" data-anim>
+      <div class="kt-strip-item">
+        <span class="kt-strip-num">100<span class="kt-strip-unit">%</span></span>
+        <span class="kt-strip-lbl">construido sobre GCP</span>
+      </div>
+      <div class="kt-strip-sep"></div>
+      <div class="kt-strip-item">
+        <span class="kt-strip-num">4</span>
+        <span class="kt-strip-lbl">ejes de uso · RAG, Agentes, Genesis, Verticales</span>
+      </div>
+      <div class="kt-strip-sep"></div>
+      <div class="kt-strip-item">
+        <span class="kt-strip-num">10<span class="kt-strip-unit">+</span></span>
+        <span class="kt-strip-lbl">servicios GCP · Vertex AI, Cloud Run, Firestore…</span>
+      </div>
+      <div class="kt-strip-sep"></div>
+      <div class="kt-strip-item">
+        <span class="kt-strip-num kt-strip-num--text">AI/ML</span>
+        <span class="kt-strip-lbl">specialization objetivo + AppMod</span>
+      </div>
+    </div>
+
+    <div class="kt-tesis-grid" data-anim>
+
+      <article class="kt-tesis-card">
+        <div class="kt-tesis-top">
+          <span class="kt-tesis-num">01</span>
+          <span class="kt-tesis-tag">Consumo</span>
+        </div>
+        <h4 class="kt-tesis-head">Cada cliente que aterrizamos abre consumo nuevo en GCP.</h4>
+        <p class="kt-tesis-body">KT2RAG es plataforma propia construida íntegramente sobre Google Cloud. Cada caso de uso entregado activa Vertex AI en un perímetro nuevo. Consumo sostenido, referenciable y medible desde el día uno.</p>
+        <div class="kt-tesis-foot">
+          <span class="kt-tesis-stat"><strong>11</strong> casos de uso activos</span>
+          <span class="kt-tesis-stat"><strong>10+</strong> servicios GCP nucleares</span>
+        </div>
+      </article>
+
+      <article class="kt-tesis-card kt-tesis-card--dark">
+        <div class="kt-tesis-top">
+          <span class="kt-tesis-num">02</span>
+          <span class="kt-tesis-tag kt-tesis-tag--dark">Diferencial</span>
+        </div>
+        <h4 class="kt-tesis-head">Google es el único hyperscaler que nos da paridad funcional hoy.</h4>
+        <p class="kt-tesis-body">NotebookLM en Workspace, Vertex AI RAG Engine y la familia Gemini son diferenciales reales frente al stack Microsoft 365/Azure. No buscamos sustituir: buscamos convivencia controlada con ventaja Google.</p>
+        <div class="kt-tesis-foot">
+          <span class="kt-tesis-stat"><strong>Gemini</strong> · familia completa</span>
+          <span class="kt-tesis-stat"><strong>RAG nativo</strong> Workspace + GCP</span>
+        </div>
+      </article>
+
+      <article class="kt-tesis-card kt-tesis-card--accent">
+        <div class="kt-tesis-top">
+          <span class="kt-tesis-num">03</span>
+          <span class="kt-tesis-tag kt-tesis-tag--accent">Motion</span>
+        </div>
+        <h4 class="kt-tesis-head">Build + Service + Co-sell. No somos un resell más.</h4>
+        <p class="kt-tesis-body">Ofrecemos asset GCP referenciable, pipeline Salesforce real sobre el que activar Vertex AI, y delivery con consultores certificados. A cambio pedimos lo justo: tier superior, MDF, soporte TAM y créditos.</p>
+        <div class="kt-tesis-foot">
+          <span class="kt-tesis-stat"><strong>+263</strong> certificaciones nuevas en 2026</span>
+          <span class="kt-tesis-stat"><strong>Specialization</strong> GenAI en Junio</span>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 06 INICIATIVAS - BENTO ============ -->
+<section class="section bg-white" id="iniciativas">
+  <div class="section-inner">
+    <div class="section-header" data-anim>
+      <div class="eyebrow">Cómo nos formamos</div>
+      <h2 class="headline">Seis iniciativas que<br><em style="font-style:normal;" class="accent-blue">aceleran la curva.</em></h2>
+      <p class="lead" style="margin-top:20px;">El plan no es un curso suelto: es un sistema operativo de formación. Seis palancas paralelas que se refuerzan entre sí.</p>
+    </div>
+
+    <div class="init-grid" data-anim>
+      <article class="init-card init-card--c1" data-num="01">
+        <span class="init-accent" aria-hidden="true"></span>
+        <div class="init-head">
+          <div class="init-icon" aria-hidden="true">
+            <!-- Network: nodos conectados -->
+            <svg viewBox="0 0 24 24">
+              <circle cx="6" cy="6" r="2.4"/>
+              <circle cx="18" cy="6" r="2.4"/>
+              <circle cx="12" cy="18" r="2.4"/>
+              <circle cx="12" cy="12" r="1.6"/>
+              <path d="M7.5 7.2 L11 11"/>
+              <path d="M16.5 7.2 L13 11"/>
+              <path d="M12 13.5 L12 15.6"/>
+            </svg>
+          </div>
+          <span class="init-tag"><span class="init-tag-num">01</span>Grupos coordinados</span>
+        </div>
+        <h3 class="init-title">Grupos de estudio</h3>
+        <p class="init-text">Una persona coordina cada grupo: ritmo, simulacros y dudas.</p>
+        <div class="init-stats">
+          <div class="init-stat init-stat--key">10 grupos</div>
+          <div class="init-stat">65 personas</div>
+          <div class="init-stat">Teams</div>
+          <div class="init-stat">Calendario</div>
+        </div>
+        <div class="init-reveal" aria-hidden="true">
+          <div class="init-reveal-lbl">En la práctica</div>
+          <div class="init-reveal-text">El grupo PMLE: 5 personas, check-in los martes y simulacro los viernes. Calendario bloqueado para todos.</div>
+        </div>
+      </article>
+
+      <article class="init-card init-card--c2" data-num="02">
+        <span class="init-accent" aria-hidden="true"></span>
+        <div class="init-head">
+          <div class="init-icon" aria-hidden="true">
+            <!-- Book / knowledge -->
+            <svg viewBox="0 0 24 24">
+              <path d="M4 5 L4 19 Q4 20 5 20 L11 20 L11 6 Q11 5 10 5 Z"/>
+              <path d="M20 5 L20 19 Q20 20 19 20 L13 20 L13 6 Q13 5 14 5 Z"/>
+              <path d="M6.5 9 L8.5 9"/>
+              <path d="M6.5 12 L8.5 12"/>
+              <path d="M15.5 9 L17.5 9"/>
+              <path d="M15.5 12 L17.5 12"/>
+            </svg>
+          </div>
+          <span class="init-tag"><span class="init-tag-num">02</span>Knowledge Base</span>
+          <a href="https://consultinginetum.github.io/Certificados-Google-Inetum/" target="_blank" rel="noopener" class="init-link" aria-label="Plan de Formación Google Cloud · Inetum">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17L17 7"/>
+              <path d="M8 7h9v9"/>
+            </svg>
+            <span>Ver la guía</span>
+          </a>
+        </div>
+        <h3 class="init-title">Repositorio Google Cloud</h3>
+        <p class="init-text">Hub interno con todo el material para preparar el examen.</p>
+        <div class="init-stats">
+          <div class="init-stat init-stat--key">11 guías</div>
+          <div class="init-stat">20+ labs</div>
+          <div class="init-stat">Cheat-sheets</div>
+          <div class="init-stat">Simulacros</div>
+        </div>
+        <div class="init-reveal" aria-hidden="true">
+          <div class="init-reveal-lbl">En la práctica</div>
+          <div class="init-reveal-text">Cada certificación tiene su carpeta SharePoint con roadmap, exámenes y un Teams donde se resuelven dudas en menos de 24h.</div>
+        </div>
+      </article>
+
+      <article class="init-card init-card--c3" data-num="03">
+        <span class="init-accent" aria-hidden="true"></span>
+        <div class="init-head">
+          <div class="init-icon" aria-hidden="true">
+            <!-- Mentoring: dos personas vinculadas -->
+            <svg viewBox="0 0 24 24">
+              <circle cx="8" cy="7" r="2.5"/>
+              <circle cx="16" cy="7" r="2.5"/>
+              <path d="M3.5 19 Q3.5 13 8 13 Q12.5 13 12.5 19"/>
+              <path d="M11.5 19 Q11.5 13 16 13 Q20.5 13 20.5 19"/>
+            </svg>
+          </div>
+          <span class="init-tag"><span class="init-tag-num">03</span>Mentoring</span>
+        </div>
+        <h3 class="init-title">Aprende de los certificados</h3>
+        <p class="init-text">Quien acaba de aprobar comparte tips, errores típicos y novedades.</p>
+        <div class="init-stats">
+          <div class="init-stat init-stat--key">Cross-BU</div>
+          <div class="init-stat">Flexible</div>
+          <div class="init-stat">Tips reales</div>
+          <div class="init-stat">Asíncrono</div>
+        </div>
+        <div class="init-reveal" aria-hidden="true">
+          <div class="init-reveal-lbl">En la práctica</div>
+          <div class="init-reveal-text">Quien aprueba pasa al canal "Recién certificados" y comparte tips. Cada candidato lo consume como prefiera: chat, 1:1 o solo leer.</div>
+        </div>
+      </article>
+
+      <article class="init-card init-card--c4" data-num="04">
+        <span class="init-accent" aria-hidden="true"></span>
+        <div class="init-head">
+          <div class="init-icon" aria-hidden="true">
+            <!-- Community: micrófono / hablar -->
+            <svg viewBox="0 0 24 24">
+              <rect x="9.5" y="3" width="5" height="11" rx="2.5"/>
+              <path d="M6 11.5 Q6 16 12 16 Q18 16 18 11.5"/>
+              <path d="M12 16 L12 20"/>
+              <path d="M9 20 L15 20"/>
+            </svg>
+          </div>
+          <span class="init-tag"><span class="init-tag-num">04</span>Community of Practice</span>
+        </div>
+        <h3 class="init-title">Sesiones técnicas</h3>
+        <p class="init-text">Cada jueves, un consultor presenta un servicio o caso real.</p>
+        <div class="init-stats">
+          <div class="init-stat init-stat--key">Semanal</div>
+          <div class="init-stat">30 min</div>
+          <div class="init-stat">5 BUs</div>
+          <div class="init-stat">Lightning talk</div>
+        </div>
+        <div class="init-reveal" aria-hidden="true">
+          <div class="init-reveal-lbl">En la práctica</div>
+          <div class="init-reveal-text">Jueves 16h, lightning talk: arquitectura Vertex AI RAG en cliente real, demo en vivo y Q&amp;A. 30 minutos.</div>
+        </div>
+      </article>
+
+      <article class="init-card init-card--c5" data-num="05">
+        <span class="init-accent" aria-hidden="true"></span>
+        <div class="init-head">
+          <div class="init-icon" aria-hidden="true">
+            <!-- Innovation Challenge: rayo / sprint -->
+            <svg viewBox="0 0 24 24">
+              <path d="M13.5 2.5 L5.5 13 L11 13 L9.5 21.5 L18 10.5 L12.5 10.5 Z"/>
+            </svg>
+          </div>
+          <span class="init-tag"><span class="init-tag-num">05</span>Innovation Challenge</span>
+        </div>
+        <h3 class="init-title">Innovation Challenge</h3>
+        <p class="init-text">Retos por sector con equipos cross-BU y demo final ante dirección.</p>
+        <div class="init-stats">
+          <div class="init-stat init-stat--key">48h sprint</div>
+          <div class="init-stat">Temático</div>
+          <div class="init-stat">Cross-BU</div>
+          <div class="init-stat">Demo final</div>
+        </div>
+        <div class="init-reveal" aria-hidden="true">
+          <div class="init-reveal-lbl">En la práctica</div>
+          <div class="init-reveal-text">Reto FSI: agente conversacional con Vertex AI Agent Builder. 4 equipos, 48h, demo final. El ganador entra a roadmap real.</div>
+        </div>
+      </article>
+
+      <article class="init-card init-card--c6" data-num="06">
+        <span class="init-accent" aria-hidden="true"></span>
+        <div class="init-head">
+          <div class="init-icon" aria-hidden="true">
+            <!-- Trofeo / competición -->
+            <svg viewBox="0 0 24 24">
+              <path d="M7 4 L17 4 L17 9 Q17 13 12 13 Q7 13 7 9 Z"/>
+              <path d="M7 6 L4 6 Q4 9 7 10"/>
+              <path d="M17 6 L20 6 Q20 9 17 10"/>
+              <path d="M12 13 L12 16"/>
+              <path d="M9 20 L15 20 L14 16 L10 16 Z"/>
+            </svg>
+          </div>
+          <span class="init-tag"><span class="init-tag-num">06</span>Competición de Labs</span>
+        </div>
+        <h3 class="init-title">Reto hands-on por equipos</h3>
+        <p class="init-text">30-45 días de labs en Google Cloud Skills Boost con ranking semanal en Teams.</p>
+        <div class="init-stats">
+          <div class="init-stat init-stat--key">30-45 días</div>
+          <div class="init-stat">Equipos 3-4</div>
+          <div class="init-stat">Skill Badges</div>
+          <div class="init-stat">Leaderboard</div>
+        </div>
+        <div class="init-reveal" aria-hidden="true">
+          <div class="init-reveal-lbl">En la práctica</div>
+          <div class="init-reveal-text">"El Mes del Cloud": puntos por labs, simulacros y asistencia. Premio al equipo ganador: voucher de examen + swag.</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+// ============ PIPELINE TIMELINE SVG ============
+
+// ============ TIMELINE TEMPORAL: AS IS → TO BE ============
+(function rolexTransition() {
+  const block = document.getElementById('transition');
+  if (!block) return;
+
+  // ============ DATOS REALES DEL EXCEL ============
+  // Por nivel: AS IS (fijo) + incrementos por mes en F1 + total final F2
+  //
+  // Foundational: AS IS 13 → +90 en F1 → +0 F2 = 103 final
+  //   Por mes: May 80, Jun 6, Jul 0, Ago 2, Sep 0, Oct 0, Nov 0, Dic 2 (sumas: CDL + GAIL)
+  // Associate: AS IS 15 → +15 en F1 → +25 F2 = 55 final
+  //   Por mes: May 0, Jun 5, Jul 0, Ago 3, Sep 0, Oct 1, Nov 0, Dic 6
+  // Professional: AS IS 11 → +10 en F1 → +123 F2 = 144 final
+  //   Por mes: May 0, Jun 3, Jul 2, Ago 1, Sep 0, Oct 0, Nov 0, Dic 4
+  // Total: AS IS 39 → +115 F1 → +148 F2 = 302 final
+  //   Por mes: May 80, Jun 14, Jul 2, Ago 6, Sep 0, Oct 1, Nov 0, Dic 12
+
+  // monthDeltas[i] = incrementos al cerrar el mes i (i=0 May, i=7 Dic)
+  // Cada array: [foundational, associate, professional, total]
+  const ASIS = [13, 15, 11, 39];
+  const F2_FINAL = [0, 25, 123, 148];
+  const F2_TOTAL = [103, 55, 144, 302]; // AS IS + F1 + F2
+
+  // Estado acumulado al cerrar cada mes de Fase 1
+  const monthState = [
+    [13, 15, 11, 39],    // Abril (AS IS puro)
+    [93, 15, 11, 119],   // Mayo: Foundational+80, Total+80
+    [99, 20, 14, 133],   // Junio: F+6, A+5, P+3, T+14
+    [99, 20, 16, 135],   // Julio: P+2, T+2
+    [101, 23, 17, 141],  // Agosto: F+2, A+3, P+1, T+6
+    [101, 23, 17, 141],  // Sept: nada
+    [101, 24, 17, 142],  // Octubre: A+1, T+1
+    [101, 24, 17, 142],  // Noviembre: nada
+    [103, 30, 21, 154],  // Diciembre: F+2, A+6, P+4, T+12 → cierre Fase 1
+  ];
+
+  const months = [
+    { name: 'Abril',      trigger: 0.00, narrative: '<strong>Hoy.</strong> Partimos con 39 certificaciones: 13 Foundational, 15 Associate y 11 Professional.' },
+    { name: 'Mayo',       trigger: 0.04, narrative: '<strong>Mayo:</strong> arrancan <em>80 personas</em> con Cloud Digital Leader (34) + Generative AI Leader (46). Base GenAI desplegada.' },
+    { name: 'Junio',      trigger: 0.13, narrative: '<strong>Junio:</strong> <em>14 exámenes</em>. Cloud Engineer, Cloud Architect y los primeros Machine Learning Engineer.' },
+    { name: 'Julio',      trigger: 0.22, narrative: '<strong>Julio:</strong> <em>2 Cloud Developer</em> · cerramos el binomio Data + App.' },
+    { name: 'Agosto',     trigger: 0.31, narrative: '<strong>Agosto:</strong> <em>6 exámenes</em>. Llegan los Data Practitioner y refuerzos en CDL, GAIL, ML.' },
+    { name: 'Septiembre', trigger: 0.40, narrative: '<strong>Septiembre:</strong> mes de estudio profundo y labs. Sin exámenes programados.' },
+    { name: 'Octubre',    trigger: 0.49, narrative: '<strong>Octubre:</strong> <em>1 examen</em> de refuerzo en Cloud Engineer.' },
+    { name: 'Noviembre',  trigger: 0.58, narrative: '<strong>Noviembre:</strong> preparación intensiva del cierre de Fase 1.' },
+    { name: 'Diciembre',  trigger: 0.67, narrative: '<strong>Diciembre:</strong> <em>12 exámenes</em>. Cierre de Fase 1: 154 certificaciones acumuladas.' },
+    { name: 'Fase 2',     trigger: 0.85, narrative: '<strong>Fase 2 · Escala:</strong> <em>148 certificaciones</em> que escalan Professional. Objetivo final: 302.' }
+  ];
+
+  // Elementos
+  const els = [
+    document.getElementById('num-1'),
+    document.getElementById('num-2'),
+    document.getElementById('num-3'),
+    document.getElementById('num-4')
+  ];
+  const subs = [
+    document.getElementById('sub-1'),
+    document.getElementById('sub-2'),
+    document.getElementById('sub-3'),
+    document.getElementById('sub-4')
+  ];
+  const stageLabel = document.getElementById('stage-label');
+  const timelineNow = document.getElementById('timeline-now');
+  const timelineNowLabel = document.getElementById('timeline-now-label');
+  const timelineFill = document.getElementById('timeline-fill');
+  const timelineFillF2 = document.getElementById('timeline-fill-f2');
+  const timelineNarrative = document.getElementById('timeline-narrative');
+  const monthCells = block.querySelectorAll('.timeline-month');
+
+  const TARGETS = [103, 55, 144, 302];
+  const SUBLABELS_BASE = ['Foundational', 'Associate', 'Professional', 'Total certificaciones'];
+
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp01 = x => Math.max(0, Math.min(1, x));
+
+  function update() {
+    const rect = block.getBoundingClientRect();
+    const blockVisualHeight = rect.height;
+    const viewportH = window.innerHeight;
+
+    let p_raw = -rect.top / (blockVisualHeight - viewportH);
+    p_raw = clamp01(p_raw);
+
+    const COMPLETION_POINT = 0.90;
+    const p = clamp01(p_raw / COMPLETION_POINT);
+
+    // === Layout de la timeline ===
+    // === Layout de la timeline (9 columnas: 8 meses 1fr + bloque F2 1.3fr) ===
+    // Cada mes ocupa ~10.75% del ancho. Mayo centro = 5.38%, Dic centro = 80.6%, F2 centro = 93%.
+    const F1_START = 5.4;
+    const F1_END = 80.6;
+    const F2_START = 86;
+    const F2_END = 93;
+
+    let nowPercent;
+    if (p < 0.02) {
+      nowPercent = 0;
+    } else if (p <= 0.67) {
+      const t = (p - 0.02) / (0.67 - 0.02);
+      nowPercent = lerp(F1_START, F1_END, t);
+    } else if (p <= 0.75) {
+      const t = (p - 0.67) / (0.75 - 0.67);
+      nowPercent = lerp(F1_END, F2_START, t);
+    } else {
+      const t = (p - 0.75) / (1.00 - 0.75);
+      nowPercent = lerp(F2_START, F2_END, t);
+    }
+
+    if (timelineNow) timelineNow.style.setProperty('--now', nowPercent + '%');
+
+    // Fill Fase 1: hasta donde está el "ahora" mientras p<=0.75, luego congelado en 81% (fin de Dic)
+    let f1Percent = Math.min(nowPercent, 81);
+    if (timelineFill) timelineFill.style.setProperty('--fill', f1Percent + '%');
+
+    // Fill Fase 2 fantasma: aparece cuando p > 0.67
+    if (p > 0.67) {
+      const f2WidthPercent = Math.max(81, nowPercent);
+      if (timelineFillF2) timelineFillF2.style.width = f2WidthPercent + '%';
+    } else {
+      if (timelineFillF2) timelineFillF2.style.width = '0%';
+    }
+
+    // Mes/hito actual
+    let currentMonthIdx = 0;
+    for (let i = months.length - 1; i >= 0; i--) {
+      if (p >= months[i].trigger) {
+        currentMonthIdx = i;
+        break;
+      }
+    }
+    const currentMonth = months[currentMonthIdx];
+
+    if (timelineNowLabel) timelineNowLabel.textContent = currentMonth.name;
+    if (stageLabel) {
+      if (currentMonth.name === 'Fase 2') {
+        stageLabel.textContent = 'Fase 2 · Escala — proyección de cierre';
+      } else if (currentMonth.name === 'Abril') {
+        stageLabel.textContent = 'Abril 2026 · Punto de partida';
+      } else {
+        stageLabel.textContent = currentMonth.name + ' 2026 · La transformación en marcha';
+      }
+    }
+    if (timelineNarrative) timelineNarrative.innerHTML = currentMonth.narrative;
+
+    // Marcar meses pasados + el mes "actual" (donde está el indicador "ahora")
+    // currentMonthIdx 0 = Abril (antes de Mayo), 1..8 = Mayo..Diciembre, 9 = Fase 2
+    // Los monthCells van de 0..8 correspondiendo a Mayo..Diciembre + Fase 2.
+    // Equivalencia: monthCells[i] ↔ months[i+1]
+    monthCells.forEach((cell, idx) => {
+      let monthPos;
+      if (idx < 8) {
+        monthPos = F1_START + (idx * ((F1_END - F1_START) / 7));
+      } else {
+        monthPos = F2_END;
+      }
+      if (nowPercent >= monthPos - 1) cell.classList.add('passed');
+      else cell.classList.remove('passed');
+
+      // Mes "actual": el currentMonthIdx 1..9 mapea a monthCells 0..8
+      if (currentMonthIdx >= 1 && (currentMonthIdx - 1) === idx) {
+        cell.classList.add('is-current');
+      } else {
+        cell.classList.remove('is-current');
+      }
+    });
+
+    // Interpolar KPIs
+    let currentState, nextState, transitionT;
+
+    if (currentMonthIdx < 8) {
+      currentState = monthState[currentMonthIdx];
+      nextState = monthState[currentMonthIdx + 1];
+      const currentTrigger = months[currentMonthIdx].trigger;
+      const nextTrigger = months[currentMonthIdx + 1].trigger;
+      transitionT = (p - currentTrigger) / (nextTrigger - currentTrigger);
+      transitionT = clamp01(transitionT);
+    } else if (currentMonthIdx === 8) {
+      currentState = monthState[8];
+      nextState = F2_TOTAL;
+      const currentTrigger = months[8].trigger;
+      const nextTrigger = months[9].trigger;
+      transitionT = (p - currentTrigger) / (nextTrigger - currentTrigger);
+      transitionT = clamp01(transitionT);
+    } else {
+      currentState = F2_TOTAL;
+      nextState = F2_TOTAL;
+      transitionT = 0;
+    }
+
+    // Actualizar KPIs (sólo número y sub-label)
+    for (let i = 0; i < 4; i++) {
+      const val = Math.round(lerp(currentState[i], nextState[i], transitionT));
+      if (els[i]) els[i].textContent = val;
+
+      // Sub-label dinámico
+      if (subs[i]) {
+        if (val >= TARGETS[i]) {
+          subs[i].textContent = '✓ objetivo alcanzado';
+        } else if (p >= 0.67) {
+          // En transición a F2: muestra progreso hacia el objetivo final
+          const remaining = TARGETS[i] - val;
+          subs[i].textContent = remaining > 0 ? `+${remaining} en Fase 2` : '✓ objetivo alcanzado';
+        } else {
+          subs[i].textContent = `de ${TARGETS[i]} al final`;
+        }
+      }
+    }
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => { update(); ticking = false; });
+      ticking = true;
+    }
+  });
+  update();
+})();
+
+// ============ SCROLL ANIMATIONS ============
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('in-view');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+
+// ============ SCROLL SPY ============
+(function scrollSpy() {
+  const sections = Array.from(document.querySelectorAll('section[id], div[id="transition"]'));
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+  const linkByHash = {};
+  navLinks.forEach(a => {
+    const hash = a.getAttribute('href').replace('#', '');
+    if (hash) linkByHash[hash] = a;
+  });
+  function setActive(id) {
+    navLinks.forEach(a => a.classList.remove('active'));
+    if (id && linkByHash[id]) linkByHash[id].classList.add('active');
+  }
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-60px 0px -55% 0px', threshold: 0 });
+  sections.forEach(s => spyObserver.observe(s));
+  navLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      const hash = a.getAttribute('href').replace('#', '');
+      if (hash) setActive(hash);
+    });
+  });
+})();
+
+// ============ TO-BE DASHBOARD FILTERS ============
+(function tobeFilters() {
+  const filterBar = document.getElementById('tobeFilters');
+  if (!filterBar) return;
+  const chips = filterBar.querySelectorAll('.chip');
+  const rows = document.querySelectorAll('.dash-table .dt-row:not(.dt-totals)');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      rows.forEach(row => {
+        const groups = (row.dataset.group || '').split(/\s+/);
+        if (filter === 'all' || groups.includes(filter)) {
+          row.classList.remove('is-hidden');
+        } else {
+          row.classList.add('is-hidden');
+        }
+      });
+    });
+  });
+})();
+
+// ============ TOGGLE Fase 1 / Fase 2 en el calendario ============
+(function phaseToggle() {
+  document.querySelectorAll('.dash-toggle').forEach(toggle => {
+    const buttons = toggle.querySelectorAll('.dash-toggle-btn');
+    const panel = toggle.closest('.dash-panel');
+    if (!panel) return;
+    const views = panel.querySelectorAll('[data-phase-view]');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const phase = btn.dataset.phase;
+        buttons.forEach(b => {
+          const active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        views.forEach(v => {
+          v.hidden = v.dataset.phaseView !== phase;
+        });
+      });
+    });
+  });
+})();
+
+// ============ TOOLTIP DE DETALLE ESTILO LOOKER STUDIO ============
+document.addEventListener('DOMContentLoaded', function() {
+(function segmentTooltip() {
+  // Datos por bloque
+  const DATA = {
+    'foundational-asis': {
+      title: 'Foundational · AS IS',
+      total: 13,
+      phase: 'asis',
+      certs: [
+        { name: 'Cloud Digital Leader', count: 9 },
+        { name: 'Generative AI Leader', count: 4 }
+      ]
+    },
+    'foundational-f1': {
+      title: 'Foundational · Fase 1',
+      total: 90,
+      phase: 'f1',
+      certs: [
+        { name: 'Cloud Digital Leader', count: 36 },
+        { name: 'Generative AI Leader', count: 54 }
+      ]
+    },
+    'associate-asis': {
+      title: 'Associate · AS IS',
+      total: 15,
+      phase: 'asis',
+      certs: [
+        { name: 'Cloud Engineer', count: 15 }
+      ]
+    },
+    'associate-f1': {
+      title: 'Associate · Fase 1',
+      total: 15,
+      phase: 'f1',
+      certs: [
+        { name: 'Cloud Engineer', count: 8 },
+        { name: 'Data Practitioner', count: 6 },
+        { name: 'Google Workspace Admin', count: 1 }
+      ]
+    },
+    'associate-f2': {
+      title: 'Associate · Fase 2',
+      total: 25,
+      phase: 'f2',
+      certs: [
+        { name: 'Cloud Engineer', count: 25 }
+      ]
+    },
+    'professional-asis': {
+      title: 'Professional · AS IS',
+      total: 11,
+      phase: 'asis',
+      certs: [
+        { name: 'Cloud Architect', count: 8 },
+        { name: 'Cloud DevOps Engineer', count: 1 },
+        { name: 'Machine Learning Engineer', count: 1 },
+        { name: 'ChromeOS Administrator', count: 1 }
+      ]
+    },
+    'professional-f1': {
+      title: 'Professional · Fase 1',
+      total: 10,
+      phase: 'f1',
+      certs: [
+        { name: 'Machine Learning Engineer', count: 4 },
+        { name: 'Data Engineer', count: 3 },
+        { name: 'Cloud Developer', count: 2 },
+        { name: 'Cloud Architect', count: 1 }
+      ]
+    },
+    'professional-f2': {
+      title: 'Professional · Fase 2',
+      total: 123,
+      phase: 'f2',
+      certs: [
+        { name: 'Cloud Architect', count: 30 },
+        { name: 'Cloud Developer', count: 30 },
+        { name: 'Machine Learning Engineer', count: 29 },
+        { name: 'Data Engineer', count: 26 },
+        { name: 'Cloud DevOps Engineer', count: 7 },
+        { name: 'Cloud Network Engineer', count: 1 }
+      ]
+    },
+    // ========= Composición del total (3 segmentos del card AS IS · F1 · F2) =========
+    'total-asis': {
+      title: 'AS IS · Total',
+      total: 39,
+      phase: 'asis',
+      certs: [
+        { name: 'Foundational', count: 13 },
+        { name: 'Associate', count: 15 },
+        { name: 'Professional', count: 11 }
+      ]
+    },
+    'total-f1': {
+      title: 'Fase 1 · Total',
+      total: 115,
+      phase: 'f1',
+      certs: [
+        { name: 'Foundational', count: 90 },
+        { name: 'Associate', count: 15 },
+        { name: 'Professional', count: 10 }
+      ]
+    },
+    'total-f2': {
+      title: 'Fase 2 · Total',
+      total: 148,
+      phase: 'f2',
+      certs: [
+        { name: 'Professional', count: 123 },
+        { name: 'Associate', count: 25 },
+        { name: 'Foundational', count: 0 }
+      ]
+    }
+  };
+
+  const tooltip = document.getElementById('seg-tooltip');
+  if (!tooltip) return;
+
+  function renderTooltip(key) {
+    const data = DATA[key];
+    if (!data) return '';
+    const rows = data.certs.map(c => `
+      <div class="tt-row">
+        <span class="tt-row-name">${c.name}</span>
+        <span class="tt-row-count">${c.count}</span>
+      </div>
+    `).join('');
+    return `
+      <div class="tt-head">
+        <span class="tt-title">${data.title}</span>
+        <span class="tt-total">${data.total}</span>
+      </div>
+      <div class="tt-list">${rows}</div>
+    `;
+  }
+
+  function showTooltip(seg, key) {
+    tooltip.innerHTML = renderTooltip(key);
+    tooltip.setAttribute('data-phase', DATA[key].phase);
+    tooltip.classList.add('is-visible');
+    tooltip.setAttribute('aria-hidden', 'false');
+    positionTooltip(seg);
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove('is-visible');
+    tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  function positionTooltip(seg) {
+    // Tooltip vive FUERA del .zoom-wrap, así que getBoundingClientRect del seg
+    // (que sí está dentro del zoom) devuelve coordenadas ya escaladas al
+    // viewport real. position: fixed las usa tal cual. Sin compensación necesaria.
+    const rect = seg.getBoundingClientRect();
+    const ttRect = tooltip.getBoundingClientRect();
+    const margin = 12;
+
+    // Por defecto: centrado horizontalmente sobre el segmento, arriba
+    let left = rect.left + rect.width / 2 - ttRect.width / 2;
+    let top = rect.top - ttRect.height - margin;
+
+    // Si se sale por arriba, ponerlo abajo
+    if (top < 10) {
+      top = rect.bottom + margin;
+      tooltip.setAttribute('data-pos', 'below');
+    } else {
+      tooltip.setAttribute('data-pos', 'above');
+    }
+
+    // Clamp horizontal
+    const minLeft = 10;
+    const maxLeft = window.innerWidth - ttRect.width - 10;
+    left = Math.max(minLeft, Math.min(left, maxLeft));
+
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  // Hover + focus en cada segmento (tanto stack-seg de las barras por nivel
+  // como dash-compose-seg de la composición total)
+  let activeSeg = null;
+  document.querySelectorAll('[data-modal]').forEach(seg => {
+    const key = seg.getAttribute('data-modal');
+    seg.addEventListener('mouseenter', () => { activeSeg = seg; showTooltip(seg, key); });
+    seg.addEventListener('mouseleave', () => { activeSeg = null; hideTooltip(); });
+    seg.addEventListener('focus', () => { activeSeg = seg; showTooltip(seg, key); });
+    seg.addEventListener('blur', () => { activeSeg = null; hideTooltip(); });
+  });
+
+  // Esconder al hacer scroll para evitar tooltip desfasado
+  window.addEventListener('scroll', () => { activeSeg = null; hideTooltip(); }, { passive: true });
+
+  // Esconder ante resize (cambia el zoom CSS del wrapper y las coordenadas)
+  window.addEventListener('resize', () => { activeSeg = null; hideTooltip(); });
+})();
+});
+</script>
+
+</div><!-- /.zoom-wrap -->
+
+<!-- Tooltip FUERA del zoom-wrap para que position:fixed use coords reales del viewport -->
+<div class="seg-tooltip" id="seg-tooltip" role="tooltip" aria-hidden="true"></div>
+
+</body>
+</html>
