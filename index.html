@@ -2695,6 +2695,338 @@ body {
 .kt-tesis-card--dark .kt-tesis-stat::before { background: #FBBC04; }
 .kt-tesis-card--accent .kt-tesis-stat::before { background: var(--inetum); }
 
+/* ============ 05-B CRAFT × Google Cloud ============ */
+/* Diseño "documento editorial" — diferente a KT2RAG (cards horizontales numeradas
+   tipo capítulo + chips de specializations + strip editorial con dividers gruesos). */
+.craft-section { padding-top: 88px; padding-bottom: 88px; position: relative; }
+
+/* Separador sutil entre KT2RAG y CRAFT para que se lean como dos bloques hermanos */
+.craft-section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: var(--line);
+}
+
+/* Hero centrado pero con jerarquía distinta — eyebrow doble (Asset · Norma) */
+.craft-hero {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 36px;
+}
+.craft-hero .craft-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--inetum);
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.craft-hero .craft-eyebrow::before,
+.craft-hero .craft-eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: var(--inetum);
+  opacity: 0.5;
+}
+.craft-hero h2 { margin-bottom: 18px; }
+.craft-hero .lead { margin: 0 auto; max-width: 680px; }
+
+/* Chips de specializations — fila horizontal centrada bajo el hero */
+.craft-specs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+.craft-spec-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px 9px 14px;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black);
+  letter-spacing: -0.005em;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.craft-spec-chip:hover {
+  border-color: var(--inetum);
+  transform: translateY(-1px);
+}
+.craft-spec-chip .craft-spec-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--inetum);
+  flex-shrink: 0;
+}
+.craft-spec-chip:nth-child(2) .craft-spec-dot { background: var(--google-blue); }
+.craft-spec-chip:nth-child(3) .craft-spec-dot { background: var(--google-green); }
+.craft-spec-chip .craft-spec-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  font-weight: 500;
+}
+
+/* Strip editorial — distinto al kt-strip (números mayores, dividers más marcados,
+   tratamiento tipográfico tipo "ficha técnica") */
+.craft-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+}
+.craft-stat {
+  padding: 28px 26px 26px;
+  border-right: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.craft-stat:last-child { border-right: none; }
+.craft-stat-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gray-1);
+  margin-bottom: 6px;
+}
+.craft-stat-num {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.craft-stat-num--text {
+  font-size: 26px;
+  letter-spacing: -0.022em;
+  color: var(--inetum);
+}
+.craft-stat-num-suffix {
+  font-size: 0.55em;
+  font-weight: 600;
+  color: var(--gray-2);
+}
+.craft-stat-lbl {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--gray-2);
+  letter-spacing: -0.005em;
+  margin-top: 4px;
+}
+
+/* Bloque "ejes de uso" — pequeña ficha de servicios GCP nucleares dentro del strip */
+.craft-stack {
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: 20px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+.craft-stack-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--inetum);
+  line-height: 1.4;
+}
+.craft-stack-label small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: var(--gray-2);
+  text-transform: none;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+}
+.craft-stack-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.craft-stack-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--off-white-2);
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gray-3);
+  letter-spacing: -0.005em;
+}
+
+/* Las 4 tesis — bloques horizontales apilados a ancho completo (tipo capítulo).
+   Cada bloque: número grande a la izquierda + contenido a la derecha + tag arriba.
+   Separados por líneas finas. Cero shadows en estos. */
+.craft-tesis {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  border-radius: 22px;
+  overflow: hidden;
+}
+.craft-tesis-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 36px;
+  padding: 38px 40px;
+  border-bottom: 1px solid var(--line-soft);
+  transition: background 0.3s ease;
+  position: relative;
+}
+.craft-tesis-row:last-child { border-bottom: none; }
+.craft-tesis-row:hover { background: var(--off-white-2); }
+.craft-tesis-row:hover .craft-tesis-num { color: var(--inetum); }
+
+/* Acento magenta en el lateral izquierdo al hover — guiño sutil */
+.craft-tesis-row::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--inetum);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.craft-tesis-row:hover::before { opacity: 1; }
+
+.craft-tesis-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+}
+.craft-tesis-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: var(--black);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease;
+}
+.craft-tesis-tag {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 5px 11px;
+  background: var(--inetum-soft);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--inetum);
+}
+
+.craft-tesis-right { padding-top: 4px; }
+.craft-tesis-head {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+  color: var(--black);
+  margin: 0 0 14px;
+}
+.craft-tesis-body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--gray-2);
+  margin: 0;
+}
+.craft-tesis-body strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+/* Footer global — texto pequeño debajo con motion 'Deploy + Consume + Co-sell' */
+.craft-footnote {
+  margin-top: 32px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gray-2);
+}
+.craft-footnote strong {
+  color: var(--inetum);
+  font-weight: 600;
+}
+.craft-footnote-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gray-1);
+  margin: 0 12px;
+  vertical-align: middle;
+}
+
+/* Responsive Craft */
+@media (max-width: 980px) {
+  .craft-stats { grid-template-columns: repeat(2, 1fr); }
+  .craft-stat:nth-child(2) { border-right: none; }
+  .craft-stat:nth-child(1), .craft-stat:nth-child(2) { border-bottom: 1px solid var(--line-soft); }
+  .craft-stack { grid-template-columns: 1fr; gap: 14px; padding: 22px 24px; }
+  .craft-tesis-row { grid-template-columns: 1fr; gap: 18px; padding: 30px 28px; }
+  .craft-tesis-num { font-size: 56px; }
+}
+@media (max-width: 600px) {
+  .craft-stats { grid-template-columns: 1fr; }
+  .craft-stat { border-right: none; border-bottom: 1px solid var(--line-soft); }
+  .craft-stat:last-child { border-bottom: none; }
+  .craft-tesis-head { font-size: 19px; }
+  .craft-tesis-body { font-size: 14px; }
+}
+
 /* ============ 06 INICIATIVAS - Bento grid ============ */
 .init-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
@@ -4717,6 +5049,7 @@ body {
       </div>
       <ul class="sidebar-list">
         <li><a href="#kt2rag">KT2RAG</a></li>
+        <li><a href="#craft">CRAFT</a></li>
         <li><a href="#capacidades">Capacidades</a></li>
         <li><a href="#gemas">Gemas Gemini</a></li>
         <li><a href="#migracion">Migración M365 → Google</a></li>
@@ -5418,6 +5751,137 @@ body {
         </div>
       </article>
 
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ 05-B CRAFT × Google Cloud ============ -->
+<section class="section bg-off craft-section" id="craft">
+  <div class="section-inner">
+
+    <div class="craft-hero" data-anim>
+      <div class="craft-eyebrow">CRAFT · Coborg™ Responsible AI Framework &amp; Toolkit</div>
+      <h2 class="headline">La llave para desbloquear<br>la <em style="font-style:normal;" class="accent-blue">Administración Pública y entornos regulados.</em></h2>
+      <p class="lead">Plataforma integral de IA de grado empresarial, Cloud-Native, agnóstica y multitenant. Diseñada para AAPP y sectores altamente regulados — con cumplimiento EU AI Act listo de fábrica.</p>
+    </div>
+
+    <!-- Chips de specializations objetivo — diferenciador respecto a KT2RAG (que apunta a AI/ML + AppMod) -->
+    <div class="craft-specs" data-anim>
+      <span class="craft-spec-chip">
+        <span class="craft-spec-dot"></span>
+        App Modernization
+        <span class="craft-spec-meta">CONTENEDORES · K8S</span>
+      </span>
+      <span class="craft-spec-chip">
+        <span class="craft-spec-dot"></span>
+        Security
+        <span class="craft-spec-meta">ZERO-TRUST · eBPF · mTLS</span>
+      </span>
+      <span class="craft-spec-chip">
+        <span class="craft-spec-dot"></span>
+        Public Sector
+        <span class="craft-spec-meta">SOBERANÍA · AAPP</span>
+      </span>
+    </div>
+
+    <!-- Strip editorial de credenciales — tratamiento distinto al kt-strip -->
+    <div class="craft-stats" data-anim>
+      <div class="craft-stat">
+        <div class="craft-stat-tag">Servicios Core</div>
+        <div class="craft-stat-num">9</div>
+        <div class="craft-stat-lbl">módulos funcionales · Forge, Compass, Composer, Gateway, Model Serving…</div>
+      </div>
+      <div class="craft-stat">
+        <div class="craft-stat-tag">Capas de plataforma</div>
+        <div class="craft-stat-num">13</div>
+        <div class="craft-stat-lbl">arquitectura por capas con seguridad Zero-Trust en 9 niveles</div>
+      </div>
+      <div class="craft-stat">
+        <div class="craft-stat-tag">Servicios GCP nucleares</div>
+        <div class="craft-stat-num">15<span class="craft-stat-num-suffix">+</span></div>
+        <div class="craft-stat-lbl">Vertex AI · GKE · GCS · Cloud SQL/AlloyDB · IAM · Load Balancing…</div>
+      </div>
+      <div class="craft-stat">
+        <div class="craft-stat-tag">Cumplimiento EU AI Act</div>
+        <div class="craft-stat-num craft-stat-num--text">RIA Ready</div>
+        <div class="craft-stat-lbl">pipeline automatizado de 6 pasos · normativa europea IA 2025/2026</div>
+      </div>
+    </div>
+
+    <!-- Ficha de stack — ejes de uso + tecnología GCP nuclear -->
+    <div class="craft-stack" data-anim>
+      <div class="craft-stack-label">
+        Ejes de uso
+        <small>cuatro frentes operativos donde CRAFT opera el día a día</small>
+      </div>
+      <div class="craft-stack-items">
+        <span class="craft-stack-item">Cumplimiento Normativo</span>
+        <span class="craft-stack-item">Orquestación de Agentes · Composer / MCP</span>
+        <span class="craft-stack-item">AI Gateway &amp; FinOps</span>
+        <span class="craft-stack-item">RAG Avanzado · Forge / Compass</span>
+        <span class="craft-stack-item">Procesamiento Multimodal</span>
+      </div>
+    </div>
+
+    <!-- Las 4 tesis para Google — bloques horizontales tipo capítulo -->
+    <div class="craft-tesis" data-anim>
+
+      <div class="craft-tesis-row">
+        <div class="craft-tesis-left">
+          <span class="craft-tesis-num">01</span>
+          <span class="craft-tesis-tag">Consumo masivo</span>
+        </div>
+        <div class="craft-tesis-right">
+          <h4 class="craft-tesis-head">CRAFT es un habilitador masivo de infraestructura y consumo de Vertex AI.</h4>
+          <p class="craft-tesis-body">Aunque CRAFT es <strong>agnóstico a nivel de proveedor</strong> (Standards-First), su arquitectura fundacional 100% Cloud-Native (CNCF) requiere un clúster robusto para operar. Desplegar CRAFT en GCP significa levantar clústeres de <strong>GKE de alta disponibilidad</strong> (Management, Shared Workload, Dedicated), peticiones masivas a <strong>Vertex AI / Gemini</strong> a través de su AI Gateway, almacenamiento masivo en GCS para el pipeline ETL de datos (Craft Forge), y bases de datos vectoriales. CRAFT no compite con GCP — lo orquesta y multiplica su consumo.</p>
+        </div>
+      </div>
+
+      <div class="craft-tesis-row">
+        <div class="craft-tesis-left">
+          <span class="craft-tesis-num">02</span>
+          <span class="craft-tesis-tag">AAPP &amp; regulados</span>
+        </div>
+        <div class="craft-tesis-right">
+          <h4 class="craft-tesis-head">La llave para desbloquear la Administración Pública y clientes regulados.</h4>
+          <p class="craft-tesis-body">El mayor freno actual para el despliegue de IA en grandes corporaciones y AAPP es el <strong>miedo regulatorio</strong>. CRAFT aporta un pipeline automatizado de Cumplimiento Normativo de 6 pasos (<strong>RIA Ready</strong>) que cubre la normativa europea de IA de 2025/2026. Al presentar "CRAFT + Google Cloud", Inetum ofrece a Google una propuesta de valor imbatible para clientes que exigen <strong>soberanía de datos</strong>, gobierno FinOps estricto (chargeback por tenant) y seguridad <strong>Zero-Trust en 9 capas</strong>.</p>
+        </div>
+      </div>
+
+      <div class="craft-tesis-row">
+        <div class="craft-tesis-left">
+          <span class="craft-tesis-num">03</span>
+          <span class="craft-tesis-tag">Retención cargas</span>
+        </div>
+        <div class="craft-tesis-right">
+          <h4 class="craft-tesis-head">Evita la fuga de cargas de trabajo hacia entornos on-premise.</h4>
+          <p class="craft-tesis-body">Para los casos de <strong>riesgo inaceptable</strong> o alta privacidad, CRAFT soporta <strong>soberanía total</strong> e inferencia local en GPUs (Craft Model Serving). Al albergarlos en GCP (usando instancias GPU de Google), Inetum retiene en la nube cargas de trabajo que de otro modo el cliente llevaría a CPDs propios (air-gapped), asegurando que el ecosistema completo del cliente permanezca dentro del tenant de Google Cloud.</p>
+        </div>
+      </div>
+
+      <div class="craft-tesis-row">
+        <div class="craft-tesis-left">
+          <span class="craft-tesis-num">04</span>
+          <span class="craft-tesis-tag">Motion co-sell</span>
+        </div>
+        <div class="craft-tesis-right">
+          <h4 class="craft-tesis-head">Deploy + Consume + Co-sell. No es resell ni servicio puro.</h4>
+          <p class="craft-tesis-body">Inetum ofrece a Google: <strong>(a)</strong> una plataforma enterprise-grade que reduce el time-to-market de semanas a días — acelerando el consumo de cloud; <strong>(b)</strong> entrada directa a AAPP gracias al framework de IA Responsable; <strong>(c)</strong> ecosistema preparado para el futuro con agentes autónomos y protocolos abiertos (MCP, CloudEvents). A cambio: <strong>apoyo en licitaciones públicas conjuntas</strong>, MDF para despliegues iniciales (PoCs) y cualificación en especializaciones de Seguridad e Infraestructura Cloud-Native.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footnote tipo cintilla — motion resumido -->
+    <div class="craft-footnote" data-anim>
+      <strong>Deploy</strong>
+      <span class="craft-footnote-dot"></span>
+      <strong>Consume</strong>
+      <span class="craft-footnote-dot"></span>
+      <strong>Co-sell</strong>
+      <span class="craft-footnote-dot"></span>
+      El motion CRAFT × Google Cloud para AAPP y entornos regulados
     </div>
 
   </div>
