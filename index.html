@@ -1155,7 +1155,7 @@ body {
   position: absolute;
   top: 0; left: 12px; right: 12px; bottom: 0;
   display: grid;
-  grid-template-columns: repeat(8, 1fr) 1.3fr;
+  grid-template-columns: repeat(7, 1fr) 1.3fr;
 }
 
 .timeline-month {
@@ -1884,7 +1884,7 @@ body {
 }
 .hm-row {
   display: grid;
-  grid-template-columns: 110px repeat(6, 1fr);
+  grid-template-columns: 110px repeat(5, 1fr);
   gap: 4px;
   align-items: center;
 }
@@ -1920,7 +1920,7 @@ body {
 }
 .hm-axis {
   display: grid;
-  grid-template-columns: 110px repeat(6, 1fr);
+  grid-template-columns: 110px repeat(5, 1fr);
   gap: 4px;
   margin-top: 6px;
   font-family: var(--font-mono);
@@ -1932,7 +1932,7 @@ body {
 .hm-axis span { text-align: center; }
 .hm-axis span:first-child { visibility: hidden; }
 
-/* ============ DASH COMPOSE — barra stacked acumulativa con AS IS+F1+F2=303 ============ */
+/* ============ DASH COMPOSE — barra stacked acumulativa con AS IS+F1+F2=302 ============ */
 .dash-compose {
   background: var(--white);
   border: 1px solid var(--line-soft);
@@ -2400,7 +2400,7 @@ body {
     font-size: 12px;
   }
   .dt-c-perf, .dt-c-spark { display: none; }
-  .hm-row, .hm-axis { grid-template-columns: 80px repeat(6, 1fr); }
+  .hm-row, .hm-axis { grid-template-columns: 80px repeat(5, 1fr); }
   .dash-hero-num { font-size: 64px; }
 }
 
@@ -3814,6 +3814,181 @@ body {
   text-transform: uppercase;
 }
 
+/* ============ CAP-GEMINI BAND · Gemini para developers ============ */
+/* Banda horizontal navy bajo el bento de 4 capacidades. Tres mini-cards con
+   acento Google (rotando azul/verde/amarillo/rojo) para subrayar el uso
+   developer-first de Gemini: optimizar código, generar web apps, asistir al consultor. */
+.cap-gemini {
+  margin-top: 22px;
+  background: linear-gradient(135deg, #232D4B 0%, #1A2240 100%);
+  border-radius: 24px;
+  padding: 32px 36px 30px;
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+}
+.cap-gemini::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 200px at 0% 100%, rgba(26,115,232,0.18), transparent 70%),
+    radial-gradient(500px 200px at 100% 0%, rgba(217,48,37,0.10), transparent 65%);
+  pointer-events: none;
+}
+.cap-gemini-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+.cap-gemini-head-left {
+  flex: 1;
+  min-width: 0;
+}
+.cap-gemini-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--google-yellow);
+  margin-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cap-gemini-eyebrow .cap-gemini-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+.cap-gemini-eyebrow .cap-gemini-dots i {
+  width: 6px; height: 6px; border-radius: 50%;
+  display: inline-block;
+}
+.cap-gemini-eyebrow .cap-gemini-dots i:nth-child(1) { background: var(--google-blue); }
+.cap-gemini-eyebrow .cap-gemini-dots i:nth-child(2) { background: var(--google-red); }
+.cap-gemini-eyebrow .cap-gemini-dots i:nth-child(3) { background: var(--google-yellow); }
+.cap-gemini-eyebrow .cap-gemini-dots i:nth-child(4) { background: var(--google-green); }
+.cap-gemini-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  color: var(--white);
+  margin: 0;
+}
+.cap-gemini-title em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--google-blue), #4285F4, var(--google-yellow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cap-gemini-lead {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.7);
+  max-width: 360px;
+  margin: 0;
+  text-align: right;
+}
+
+.cap-gemini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+.cap-gemini-tile {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.cap-gemini-tile:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.16);
+  transform: translateY(-2px);
+}
+.cap-gemini-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.cap-gemini-tile-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.06);
+}
+.cap-gemini-tile-icon svg {
+  width: 18px; height: 18px;
+  stroke-width: 1.6;
+  fill: none;
+}
+.cap-gemini-tile--1 .cap-gemini-tile-icon { background: rgba(26,115,232,0.18); }
+.cap-gemini-tile--1 .cap-gemini-tile-icon svg { stroke: #4285F4; }
+.cap-gemini-tile--2 .cap-gemini-tile-icon { background: rgba(30,142,62,0.18); }
+.cap-gemini-tile--2 .cap-gemini-tile-icon svg { stroke: #34A853; }
+.cap-gemini-tile--3 .cap-gemini-tile-icon { background: rgba(249,171,0,0.18); }
+.cap-gemini-tile--3 .cap-gemini-tile-icon svg { stroke: var(--google-yellow); }
+.cap-gemini-tile-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+}
+.cap-gemini-tile-title {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--white);
+  margin: 0;
+}
+.cap-gemini-tile-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.65);
+  margin: 0;
+}
+.cap-gemini-tile-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.cap-gemini-tile-stack span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: -0.005em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.7);
+}
+
+@media (max-width: 900px) {
+  .cap-gemini-grid { grid-template-columns: 1fr; }
+  .cap-gemini-head { flex-direction: column; align-items: flex-start; }
+  .cap-gemini-lead { text-align: left; max-width: 100%; }
+}
+
 /* Gemas Gemini — diferencial */
 .cap-diff {
   display: grid;
@@ -5050,10 +5225,7 @@ body {
       <ul class="sidebar-list">
         <li><a href="#kt2rag">KT2RAG</a></li>
         <li><a href="#craft">CRAFT</a></li>
-        <li><a href="#capacidades">Capacidades</a></li>
-        <li><a href="#gemas">Gemas Gemini</a></li>
-        <li><a href="#migracion">Migración M365 → Google</a></li>
-        <li><a href="#migracion-ia">Metodología & IA</a></li>
+        <li><a href="#capacidades">Transformation &amp; Performance</a></li>
       </ul>
     </div>
 
@@ -5095,14 +5267,14 @@ body {
         <div class="hero-bento-value accent">×8</div>
         <div class="hero-bento-label">Visión con Fase 2</div>
       </div>
-      <div class="hero-bento-text">Multiplicamos por 8 la base certificada total con la siguiente fase del plan: hasta 303 certificaciones.</div>
+      <div class="hero-bento-text">Multiplicamos por 8 la base certificada total con la siguiente fase del plan: hasta 302 certificaciones.</div>
     </div>
     <div class="hero-bento-card">
       <div>
-        <div class="hero-bento-value">+264</div>
+        <div class="hero-bento-value">+263</div>
         <div class="hero-bento-label">Certificaciones nuevas</div>
       </div>
-      <div class="hero-bento-text">Las que sumamos durante el plan completo: 117 este año más 147 en Fase 2 al ecosistema Google Cloud de Inetum.</div>
+      <div class="hero-bento-text">Las que sumamos durante el plan completo: 116 este año más 147 en Fase 2 al ecosistema Google Cloud de Inetum.</div>
     </div>
   </div>
 </section>
@@ -5219,7 +5391,7 @@ body {
         <div class="transition-num-card" id="num-card-1">
           <div class="transition-num-value" id="num-1">13</div>
           <div class="transition-num-label">Foundational</div>
-          <div class="transition-num-sub" id="sub-1">de 104 al final</div>
+          <div class="transition-num-sub" id="sub-1">de 103 al final</div>
         </div>
         <div class="transition-num-card" id="num-card-2">
           <div class="transition-num-value" id="num-2">15</div>
@@ -5234,7 +5406,7 @@ body {
         <div class="transition-num-card highlight" id="num-card-4">
           <div class="transition-num-value" id="num-4">39</div>
           <div class="transition-num-label">Total certificaciones</div>
-          <div class="transition-num-sub" id="sub-4">de 303 al final</div>
+          <div class="transition-num-sub" id="sub-4">de 302 al final</div>
         </div>
       </div>
 
@@ -5255,34 +5427,31 @@ body {
             <div class="timeline-fill-f2" id="timeline-fill-f2"></div>
           </div>
 
-          <!-- Hitos Fase 1: 8 meses (sin chips, línea limpia) -->
+          <!-- Hitos Fase 1: 7 meses (sin chips, línea limpia) -->
           <div class="timeline-milestones">
-            <div class="timeline-month" data-month="0" data-trigger="0.04">
-              <div class="timeline-month-name">Mayo</div>
-            </div>
-            <div class="timeline-month" data-month="1" data-trigger="0.13">
+            <div class="timeline-month" data-month="0" data-trigger="0.05">
               <div class="timeline-month-name">Junio</div>
             </div>
-            <div class="timeline-month" data-month="2" data-trigger="0.22">
+            <div class="timeline-month" data-month="1" data-trigger="0.15">
               <div class="timeline-month-name">Julio</div>
             </div>
-            <div class="timeline-month" data-month="3" data-trigger="0.31">
+            <div class="timeline-month" data-month="2" data-trigger="0.25">
               <div class="timeline-month-name">Agosto</div>
             </div>
-            <div class="timeline-month" data-month="4" data-trigger="0.40">
+            <div class="timeline-month" data-month="3" data-trigger="0.35">
               <div class="timeline-month-name">Septiembre</div>
             </div>
-            <div class="timeline-month" data-month="5" data-trigger="0.49">
+            <div class="timeline-month" data-month="4" data-trigger="0.45">
               <div class="timeline-month-name">Octubre</div>
             </div>
-            <div class="timeline-month" data-month="6" data-trigger="0.58">
+            <div class="timeline-month" data-month="5" data-trigger="0.55">
               <div class="timeline-month-name">Noviembre</div>
             </div>
-            <div class="timeline-month" data-month="7" data-trigger="0.67">
+            <div class="timeline-month" data-month="6" data-trigger="0.65">
               <div class="timeline-month-name">Diciembre</div>
             </div>
             <!-- Hito Fase 2 al final -->
-            <div class="timeline-month timeline-month--f2" data-month="8" data-trigger="0.85">
+            <div class="timeline-month timeline-month--f2" data-month="7" data-trigger="0.85">
               <div class="timeline-month-name">Fase 2</div>
             </div>
           </div>
@@ -5298,7 +5467,7 @@ body {
   <div class="section-inner">
     <div class="section-header" data-anim>
       <div class="eyebrow">El plan en cifras</div>
-      <h2 class="headline">Una hoja de ruta, dos fases,<br><em style="font-style:normal;" class="accent-blue">303 certificaciones.</em></h2>
+      <h2 class="headline">Una hoja de ruta, dos fases,<br><em style="font-style:normal;" class="accent-blue">302 certificaciones.</em></h2>
       <p class="lead" style="margin-top:20px;">Fase 1 entre mayo y diciembre 2026 construye la base. Fase 2 escala Professional. Estos son los números reales.</p>
     </div>
 
@@ -5309,15 +5478,15 @@ body {
       <div class="dash-cockpit">
         <div class="dash-hero-kpi">
           <div class="dash-eyebrow"><span class="dash-dot"></span>Visión completa · con Fase 2</div>
-          <div class="dash-hero-num">303</div>
+          <div class="dash-hero-num">302</div>
           <div class="dash-hero-cap">certificaciones totales</div>
           <div class="dash-hero-delta">
             <span class="delta-arrow">↗</span>
-            <span><strong>+264</strong> sobre AS IS · <strong>×7,8</strong> base</span>
+            <span><strong>+263</strong> sobre AS IS · <strong>×7,7</strong> base</span>
           </div>
         </div>
 
-        <!-- Composición acumulativa: AS IS + Fase 1 + Fase 2 = 303 -->
+        <!-- Composición acumulativa: AS IS + Fase 1 + Fase 2 = 302 -->
         <div class="dash-compose">
           <div class="dash-compose-head">
             <div class="dash-eyebrow">Composición del total</div>
@@ -5327,8 +5496,8 @@ body {
               <span class="dash-compose-num">39</span>
               <span class="dash-compose-tag">AS IS</span>
             </div>
-            <div class="dash-compose-seg seg-f1" style="flex:117" data-modal="total-f1" tabindex="0" role="button" aria-label="Ver detalle Fase 1 total">
-              <span class="dash-compose-num">117</span>
+            <div class="dash-compose-seg seg-f1" style="flex:116" data-modal="total-f1" tabindex="0" role="button" aria-label="Ver detalle Fase 1 total">
+              <span class="dash-compose-num">116</span>
               <span class="dash-compose-tag">FASE 1 · MAY → DIC</span>
             </div>
             <div class="dash-compose-seg seg-f2" style="flex:147" data-modal="total-f2" tabindex="0" role="button" aria-label="Ver detalle Fase 2 total">
@@ -5338,7 +5507,7 @@ body {
           </div>
           <div class="dash-compose-people">
             <span class="dash-compose-people-tag">Detrás de los números</span>
-            <span class="dash-compose-people-val"><strong>65</strong> profesionales distintos · 10 grupos · 264 inscripciones a curso</span>
+            <span class="dash-compose-people-val"><strong>65</strong> profesionales distintos · 10 grupos · 263 inscripciones a curso</span>
           </div>
         </div>
 
@@ -5358,16 +5527,16 @@ body {
             </div>
             <div class="dash-legend dash-legend--totals">
               <span class="leg leg--asis"><i></i>AS IS <strong>39</strong></span>
-              <span class="leg leg--f1"><i></i>Fase 1 <strong>117</strong></span>
+              <span class="leg leg--f1"><i></i>Fase 1 <strong>116</strong></span>
               <span class="leg leg--f2"><i></i>Fase 2 <strong>147</strong></span>
             </div>
           </div>
           <div class="dash-stack">
             <div class="stack-row" data-level="Foundational">
-              <div class="stack-lbl"><span class="lvl">Foundational</span><span class="lvl-tot">104</span></div>
+              <div class="stack-lbl"><span class="lvl">Foundational</span><span class="lvl-tot">103</span></div>
               <div class="stack-track">
                 <div class="stack-seg s0" style="flex:13" data-modal="foundational-asis" tabindex="0" role="button" aria-label="Ver detalle Foundational AS IS"><span>13</span></div>
-                <div class="stack-seg s1" style="flex:91" data-modal="foundational-f1" tabindex="0" role="button" aria-label="Ver detalle Foundational Fase 1"><span>91</span></div>
+                <div class="stack-seg s1" style="flex:90" data-modal="foundational-f1" tabindex="0" role="button" aria-label="Ver detalle Foundational Fase 1"><span>90</span></div>
               </div>
             </div>
             <div class="stack-row" data-level="Associate">
@@ -5406,24 +5575,22 @@ body {
           <!-- FASE 1 view -->
           <div class="dash-phase-view" data-phase-view="f1">
             <div class="dash-phase-meta">
-              <span class="dash-phase-meta-num">117</span>
-              <span class="dash-phase-meta-lbl">inscripciones repartidas en 8 meses · May → Dic 2026</span>
+              <span class="dash-phase-meta-num">116</span>
+              <span class="dash-phase-meta-lbl">inscripciones repartidas en 5 hitos · Jun → Dic 2026</span>
             </div>
             <div class="heatmap">
               <div class="hm-row">
                 <div class="hm-lbl">Foundational</div>
-                <div class="hm-cell" data-v="3" title="Mayo · 80"><span>80</span></div>
-                <div class="hm-cell" data-v="1" title="Junio · 6"><span>6</span></div>
-                <div class="hm-cell" data-v="0" title="Julio · 0"><span>·</span></div>
+                <div class="hm-cell" data-v="3" title="Junio · 80"><span>80</span></div>
+                <div class="hm-cell" data-v="1" title="Julio · 6"><span>6</span></div>
                 <div class="hm-cell" data-v="1" title="Agosto · 2"><span>2</span></div>
-                <div class="hm-cell" data-v="1" title="Sep+Oct · 1"><span>1</span></div>
+                <div class="hm-cell" data-v="0" title="Octubre · 0"><span>·</span></div>
                 <div class="hm-cell" data-v="1" title="Diciembre · 2"><span>2</span></div>
               </div>
               <div class="hm-row">
                 <div class="hm-lbl">Associate</div>
                 <div class="hm-cell" data-v="0"><span>·</span></div>
                 <div class="hm-cell" data-v="1"><span>5</span></div>
-                <div class="hm-cell" data-v="0"><span>·</span></div>
                 <div class="hm-cell" data-v="1"><span>3</span></div>
                 <div class="hm-cell" data-v="1"><span>1</span></div>
                 <div class="hm-cell" data-v="1"><span>5</span></div>
@@ -5431,17 +5598,16 @@ body {
               <div class="hm-row">
                 <div class="hm-lbl">Professional</div>
                 <div class="hm-cell" data-v="0"><span>·</span></div>
-                <div class="hm-cell" data-v="1"><span>3</span></div>
-                <div class="hm-cell" data-v="1"><span>3</span></div>
+                <div class="hm-cell" data-v="1"><span>6</span></div>
                 <div class="hm-cell" data-v="1"><span>1</span></div>
                 <div class="hm-cell" data-v="0"><span>·</span></div>
                 <div class="hm-cell" data-v="1"><span>5</span></div>
               </div>
               <div class="hm-axis">
-                <span>·</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AGO</span><span>OCT</span><span>DIC</span>
+                <span>·</span><span>JUN</span><span>JUL</span><span>AGO</span><span>OCT</span><span>DIC</span>
               </div>
             </div>
-            <div class="dash-foot"><strong>Mayo</strong> concentra el pico de arranque con 80 inscripciones · el resto del año reparte refuerzos hasta diciembre.</div>
+            <div class="dash-foot"><strong>Junio</strong> concentra el pico de arranque con 80 inscripciones · el resto del año reparte refuerzos hasta diciembre.</div>
           </div>
 
           <!-- FASE 2 view -->
@@ -5746,7 +5912,7 @@ body {
         <h4 class="kt-tesis-head">Build + Service + Co-sell. No somos un resell más.</h4>
         <p class="kt-tesis-body">Ofrecemos asset GCP referenciable, pipeline Salesforce real sobre el que activar Vertex AI, y delivery con consultores certificados. A cambio pedimos lo justo: tier superior, MDF, soporte TAM y créditos.</p>
         <div class="kt-tesis-foot">
-          <span class="kt-tesis-stat"><strong>+264</strong> certificaciones nuevas en el plan</span>
+          <span class="kt-tesis-stat"><strong>+263</strong> certificaciones nuevas en el plan</span>
           <span class="kt-tesis-stat"><strong>Specialization</strong> GenAI en Junio</span>
         </div>
       </article>
@@ -5893,8 +6059,8 @@ body {
 
     <div class="section-header section-header--split" data-anim>
       <div>
-        <div class="eyebrow">Lo que hacemos hoy</div>
-        <h2 class="headline">Cuatro capacidades, <em style="font-style:normal;" class="accent-blue">un ecosistema integrado.</em></h2>
+        <div class="eyebrow">Transformation &amp; Performance</div>
+        <h2 class="headline">Cuatro frentes, <em style="font-style:normal;" class="accent-blue">un ecosistema integrado.</em></h2>
       </div>
       <p class="lead">Producto, motor, dato y decisión. Los cuatro frentes donde construimos día a día sobre tecnología Google. Una capa sólida que da contexto real a cualquier caso de uso de IA.</p>
     </div>
@@ -5916,13 +6082,13 @@ body {
           </div>
           <span class="cap-card-num">01 · Producto</span>
         </div>
-        <h3 class="cap-card-title">Web Apps y microservicios</h3>
-        <p class="cap-card-text">Interfaces a medida con HTML, JS y Apps Script para que cualquier perfil registre, consulte y modifique datos de forma controlada, sin afectar la integridad de las hojas. Una WebApp por proceso, todas orquestadas desde un portal único.</p>
+        <h3 class="cap-card-title">Web Apps y microservicios con Gemini</h3>
+        <p class="cap-card-text">Interfaces a medida con HTML, JS y Apps Script para que cualquier perfil registre, consulte y modifique datos de forma controlada, sin afectar la integridad de las hojas. <strong>Gemini</strong> acelera la generación de código; una WebApp por proceso, todas orquestadas desde un portal único.</p>
         <div class="cap-card-tools">
           <span class="cap-tool-chip">Apps Script</span>
           <span class="cap-tool-chip">HTML/JS</span>
-          <span class="cap-tool-chip">Sites</span>
-          <span class="cap-tool-chip">Gemas Gemini</span>
+          <span class="cap-tool-chip">Gemini</span>
+          <span class="cap-tool-chip">Gemini API</span>
         </div>
       </article>
 
@@ -6007,6 +6173,85 @@ body {
 
     </div>
 
+    <!-- Banda Gemini — capacidades de desarrollo asistido del ecosistema -->
+    <div class="cap-gemini" data-anim>
+      <div class="cap-gemini-head">
+        <div class="cap-gemini-head-left">
+          <div class="cap-gemini-eyebrow">
+            <span class="cap-gemini-dots"><i></i><i></i><i></i><i></i></span>
+            Gemini · Developer mode
+          </div>
+          <h3 class="cap-gemini-title">Gemini no es solo motor de IA — es <em>acelerador de desarrollo.</em></h3>
+        </div>
+        <p class="cap-gemini-lead">Gemini y la Gemini API se integran en el flujo del consultor para acelerar la creación de Web Apps, optimizar código existente y resolver dudas técnicas en el momento.</p>
+      </div>
+
+      <div class="cap-gemini-grid">
+
+        <article class="cap-gemini-tile cap-gemini-tile--1">
+          <div class="cap-gemini-tile-top">
+            <div class="cap-gemini-tile-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 6 L3 12 L8 18"/>
+                <path d="M16 6 L21 12 L16 18"/>
+                <path d="M14 4 L10 20"/>
+              </svg>
+            </div>
+            <span class="cap-gemini-tile-tag">01 · Optimizar</span>
+          </div>
+          <h4 class="cap-gemini-tile-title">Optimización de código</h4>
+          <p class="cap-gemini-tile-text">Mejora de Apps Script, Python y SQL existentes. Gemini revisa, sugiere mejoras de rendimiento, detecta antipatrones y reescribe funciones largas en bloques mantenibles.</p>
+          <div class="cap-gemini-tile-stack">
+            <span>Gemini</span>
+            <span>Review</span>
+            <span>Performance</span>
+          </div>
+        </article>
+
+        <article class="cap-gemini-tile cap-gemini-tile--2">
+          <div class="cap-gemini-tile-top">
+            <div class="cap-gemini-tile-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="14" rx="2"/>
+                <path d="M3 8 L21 8"/>
+                <circle cx="6" cy="6" r="0.5" fill="currentColor"/>
+                <circle cx="8" cy="6" r="0.5" fill="currentColor"/>
+                <path d="M7 12 L12 12"/>
+                <path d="M7 15 L17 15"/>
+              </svg>
+            </div>
+            <span class="cap-gemini-tile-tag">02 · Generar</span>
+          </div>
+          <h4 class="cap-gemini-tile-title">Generación de Web Apps</h4>
+          <p class="cap-gemini-tile-text">Del prompt al MVP funcional: HTML, JavaScript y backend Apps Script generados en minutos. Interfaces a medida, formularios conectados a Sheets y endpoints REST listos para producción.</p>
+          <div class="cap-gemini-tile-stack">
+            <span>Apps Script</span>
+            <span>HTML/JS</span>
+            <span>Gemini API</span>
+          </div>
+        </article>
+
+        <article class="cap-gemini-tile cap-gemini-tile--3">
+          <div class="cap-gemini-tile-top">
+            <div class="cap-gemini-tile-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2 L14 9 L21 9.5 L15.5 14 L17 21 L12 17 L7 21 L8.5 14 L3 9.5 L10 9 Z"/>
+              </svg>
+            </div>
+            <span class="cap-gemini-tile-tag">03 · Asistir</span>
+          </div>
+          <h4 class="cap-gemini-tile-title">Asistencia en el día a día</h4>
+          <p class="cap-gemini-tile-text">Resolución de dudas técnicas, generación de tests, documentación inline y traducción entre lenguajes. Gemini reduce el tiempo de aprendizaje y desbloquea consultores en cualquier punto del proyecto.</p>
+          <div class="cap-gemini-tile-stack">
+            <span>Q&amp;A</span>
+            <span>Docs</span>
+            <span>Tests</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
     <!-- Stats strip al pie de Capacidades -->
     <div class="cap-stats-strip" data-anim style="margin-top:18px;margin-bottom:0;">
       <div class="cap-stat-tile">
@@ -6028,227 +6273,6 @@ body {
       <div class="cap-stat-tile">
         <div class="cap-stat-num">150K</div>
         <div class="cap-stat-lbl">Registros<br>validados</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ 06-B GEMAS GEMINI · IA AL SERVICIO DEL EQUIPO ============ -->
-<section class="section bg-off" id="gemas">
-  <div class="section-inner">
-
-    <div class="section-header section-header--split" data-anim>
-      <div>
-        <div class="eyebrow">IA al servicio del equipo</div>
-        <h2 class="headline">Gemas Gemini para <em style="font-style:normal;" class="accent-blue">potenciar al consultor.</em></h2>
-      </div>
-      <p class="lead">Cada Apps Script y cada Sheet limpio es infraestructura sobre la que Gemini puede trabajar con contexto. Y encima, asistentes IA especializados por capacidad para no partir de cero en ningún proyecto.</p>
-    </div>
-
-    <!-- Diferencial: Gemas Gemini -->
-    <div class="cap-diff" data-anim>
-      <div class="cap-diff-card">
-        <div>
-          <div class="cap-diff-eyebrow">★ Diferencial · IA en el flujo diario</div>
-          <h3 class="cap-diff-title">Asistentes IA <em>especializados por capacidad.</em></h3>
-          <p class="cap-diff-text">Gemini Gems entrenados con el contexto y el lenguaje de cada disciplina. Cada consultor accede al asistente que necesita y obtiene respuestas alineadas con nuestros estándares y metodologías internas.</p>
-        </div>
-        <div class="cap-gems-grid">
-          <div class="cap-gem"><span class="cap-gem-dot"></span>Gema · Apps Script Builder</div>
-          <div class="cap-gem"><span class="cap-gem-dot"></span>Gema · Looker Designer</div>
-          <div class="cap-gem"><span class="cap-gem-dot"></span>Gema · SQL/BigQuery Coach</div>
-          <div class="cap-gem"><span class="cap-gem-dot"></span>Gema · WebApp UX</div>
-          <div class="cap-gem"><span class="cap-gem-dot"></span>Gema · Data Quality</div>
-          <div class="cap-gem"><span class="cap-gem-dot"></span>Gema · Documentación</div>
-        </div>
-      </div>
-      <div class="cap-diff-side">
-        <div class="cap-diff-side-num">−60%</div>
-        <div class="cap-diff-side-lbl">Tiempo de delivery</div>
-        <div class="cap-diff-side-text">Las Gemas con contexto propio reducen el tiempo de diseñar, desarrollar y documentar una solución estándar. La IA acelera la ejecución; el consultor valida y aporta visión de negocio.</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ 07 MIGRACIÓN MICROSOFT → GOOGLE ============ -->
-<section class="section bg-off" id="migracion">
-  <div class="section-inner">
-
-    <div class="section-header section-header--split" data-anim>
-      <div>
-        <div class="eyebrow">Migración estratégica</div>
-        <h2 class="headline">De los entornos heredados<br>al <em style="font-style:normal;" class="accent-blue">ecosistema nativo Google.</em></h2>
-      </div>
-      <p class="lead">Una plataforma cloud-native, colaborativa por defecto, con IA integrada de serie. Con Gemini en el flujo, la migración se convierte en un proceso iterativo, controlado y mucho más rápido de ejecutar.</p>
-    </div>
-
-    <!-- Comparativa AS IS / TO BE -->
-    <div class="mig-compare" data-anim>
-      <div class="mig-side mig-side--asis">
-        <div class="mig-side-tag">Situación actual</div>
-        <h3 class="mig-side-title">Procesos al límite</h3>
-        <ul class="mig-side-list">
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></span>Automatizaciones frágiles que fallan y corrompen ficheros</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></span>Dependencias frágiles entre ficheros y propietarios únicos</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></span>Sin trazabilidad ni auditoría de cambios</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></span>Errores manuales y horas repetitivas sin valor</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></span>Conocimiento atrapado en personas, no en procesos</li>
-        </ul>
-      </div>
-      <div class="mig-arrow">
-        <div class="mig-arrow-shape">
-          <svg viewBox="0 0 24 24"><path d="M4 12 L20 12"/><path d="M14 6 L20 12 L14 18"/></svg>
-        </div>
-      </div>
-      <div class="mig-side mig-side--tobe">
-        <div class="mig-side-tag">Futuro Google · IA-Ready</div>
-        <h3 class="mig-side-title">Procesos <em>nativos y escalables</em></h3>
-        <ul class="mig-side-list">
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7"/></svg></span>Sheets + Apps Script: sin macros pesadas, escalable</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7"/></svg></span>Unidades Compartidas con permisos granulares</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7"/></svg></span>Historial de versiones y logs automáticos</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7"/></svg></span>Web Apps que evitan errores y validan en origen</li>
-          <li><span class="mig-side-mark"><svg viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 7"/></svg></span>Procesos documentados, listos para integrar IA encima</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Arquitectura pipeline -->
-    <div class="mig-pipeline-wrap" data-anim>
-      <div class="mig-pipeline-head">
-        <div>
-          <div class="mig-pipeline-title">Arquitectura nativa Google</div>
-          <div class="mig-pipeline-sub">Cinco capas que encajan entre sí de forma nativa. Sin integraciones forzadas, sin licencias adicionales.</div>
-        </div>
-        <div class="mig-pipeline-badge">100% Google</div>
-      </div>
-      <div class="mig-pipeline">
-        <div class="mig-pipeline-line"></div>
-        <div class="mig-pipe-node mig-pipe-node--1">
-          <div class="mig-pipe-circle">
-            <svg viewBox="0 0 24 24"><path d="M3 7 L9 7 L11 5 L21 5 L21 19 Q21 20 20 20 L4 20 Q3 20 3 19 Z"/></svg>
-          </div>
-          <div class="mig-pipe-name">Unidades Compartidas</div>
-          <div class="mig-pipe-role">Almacenamiento</div>
-        </div>
-        <div class="mig-pipe-node mig-pipe-node--2">
-          <div class="mig-pipe-circle">
-            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9 L21 9"/><path d="M9 4 L9 20"/><path d="M15 4 L15 20"/><path d="M3 14.5 L21 14.5"/></svg>
-          </div>
-          <div class="mig-pipe-name">Google Sheets</div>
-          <div class="mig-pipe-role">Estructura</div>
-        </div>
-        <div class="mig-pipe-node mig-pipe-node--3">
-          <div class="mig-pipe-circle">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2 L12 5"/><path d="M12 19 L12 22"/><path d="M4.93 4.93 L7.05 7.05"/><path d="M16.95 16.95 L19.07 19.07"/><path d="M2 12 L5 12"/><path d="M19 12 L22 12"/><path d="M4.93 19.07 L7.05 16.95"/><path d="M16.95 7.05 L19.07 4.93"/></svg>
-          </div>
-          <div class="mig-pipe-name">Apps Script</div>
-          <div class="mig-pipe-role">Orquestación</div>
-        </div>
-        <div class="mig-pipe-node mig-pipe-node--4">
-          <div class="mig-pipe-circle">
-            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 8 L21 8"/><circle cx="6" cy="6" r="0.6"/><circle cx="8" cy="6" r="0.6"/><path d="M8 13 L11 13 L11 15 L8 15 Z"/><path d="M13 12 L17 12 M13 15 L16 15"/></svg>
-          </div>
-          <div class="mig-pipe-name">Web Apps</div>
-          <div class="mig-pipe-role">Interfaz</div>
-        </div>
-        <div class="mig-pipe-node mig-pipe-node--5">
-          <div class="mig-pipe-circle">
-            <svg viewBox="0 0 24 24"><path d="M3 20 L21 20"/><path d="M6 20 L6 13"/><path d="M11 20 L11 9"/><path d="M16 20 L16 6"/><path d="M21 20 L21 3"/></svg>
-          </div>
-          <div class="mig-pipe-name">Looker Studio</div>
-          <div class="mig-pipe-role">Decisión</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ 07-B MIGRACIÓN · METODOLOGÍA + IA ============ -->
-<section class="section bg-white" id="migracion-ia">
-  <div class="section-inner">
-
-    <div class="section-header section-header--split" data-anim>
-      <div>
-        <div class="eyebrow">Metodología & IA</div>
-        <h2 class="headline">End-to-end <em style="font-style:normal;" class="accent-blue">con Gemini de aliado.</em></h2>
-      </div>
-      <p class="lead">Cinco fases para llevar el proceso del kick-off al traspaso, con la IA acelerando lo mecánico para que el consultor se concentre en lo que aporta valor.</p>
-    </div>
-
-    <!-- Metodología 5 fases -->
-    <div class="mig-phases" data-anim style="margin-top:24px;">
-      <div class="mig-phase mig-phase--1">
-        <div class="mig-phase-num">Fase 1</div>
-        <div class="mig-phase-title">Kick-off</div>
-        <div class="mig-phase-text">Reunión inicial con el PO: AS-IS, KPIs, confidencialidad y entorno técnico.</div>
-      </div>
-      <div class="mig-phase mig-phase--2">
-        <div class="mig-phase-num">Fase 2</div>
-        <div class="mig-phase-title">Diseño TO-BE</div>
-        <div class="mig-phase-text">Arquitectura de la solución, herramientas, integraciones y dependencias.</div>
-      </div>
-      <div class="mig-phase mig-phase--3">
-        <div class="mig-phase-num">Fase 3</div>
-        <div class="mig-phase-title">Desarrollo</div>
-        <div class="mig-phase-text">Construcción iterativa con check points y prototipos validables.</div>
-      </div>
-      <div class="mig-phase mig-phase--4">
-        <div class="mig-phase-num">Fase 4</div>
-        <div class="mig-phase-title">Testing & UAT</div>
-        <div class="mig-phase-text">Pruebas conjuntas y ajustes a petición de usuario, con datos reales.</div>
-      </div>
-      <div class="mig-phase mig-phase--5">
-        <div class="mig-phase-num">Fase 5</div>
-        <div class="mig-phase-title">Traspaso</div>
-        <div class="mig-phase-text">Manuales, píldoras formativas, instalación y autonomía 100% del área.</div>
-      </div>
-    </div>
-
-    <!-- IA como acelerador (diferencial) -->
-    <div class="mig-ai" data-anim style="margin-top:16px;">
-      <div class="mig-ai-card">
-        <div class="mig-ai-eyebrow">★ Diferencial · IA acelerando la migración</div>
-        <h3 class="mig-ai-title">Gemini transforma los procesos antiguos <em>en arquitectura nativa Google.</em></h3>
-        <p class="mig-ai-text">El equipo ya utiliza Gemini como parte del flujo diario: análisis de automatizaciones heredadas, traducción a Apps Script, limpieza de datos y documentación automática. La IA complementa al consultor acelerando las tareas mecánicas del proyecto, mientras la persona aporta criterio y validación.</p>
-        <div class="mig-ai-stat">
-          <div class="mig-ai-stat-num">−65%</div>
-          <div class="mig-ai-stat-lbl">Tiempo de migración de procesos antiguos con asistencia IA</div>
-        </div>
-      </div>
-      <div class="mig-ai-side">
-        <div class="mig-ai-feat">
-          <div class="mig-ai-feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M7 8 L4 12 L7 16"/><path d="M17 8 L20 12 L17 16"/><path d="M14 6 L10 18"/></svg>
-          </div>
-          <div class="mig-ai-feat-name">Análisis automático</div>
-          <div class="mig-ai-feat-text">Lectura del código heredado y mapa funcional en horas, no semanas.</div>
-        </div>
-        <div class="mig-ai-feat">
-          <div class="mig-ai-feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 6 L20 6"/><path d="M4 12 L20 12"/><path d="M4 18 L13 18"/><path d="M17 16 L21 20 L17 20 Z"/></svg>
-          </div>
-          <div class="mig-ai-feat-name">Traducción guiada</div>
-          <div class="mig-ai-feat-text">Conversión a Apps Script con patrones validados internamente.</div>
-        </div>
-        <div class="mig-ai-feat">
-          <div class="mig-ai-feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M3 21 L21 21"/><path d="M5 21 L5 14 M11 21 L11 9 M17 21 L17 5"/><path d="M5 14 L11 9 L17 5"/></svg>
-          </div>
-          <div class="mig-ai-feat-name">Limpieza de datos</div>
-          <div class="mig-ai-feat-text">Detección de duplicados, formatos y outliers asistida por IA.</div>
-        </div>
-        <div class="mig-ai-feat">
-          <div class="mig-ai-feat-icon">
-            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8 L16 8"/><path d="M8 12 L16 12"/><path d="M8 16 L12 16"/></svg>
-          </div>
-          <div class="mig-ai-feat-name">Documentación auto</div>
-          <div class="mig-ai-feat-text">Manuales, diagramas y píldoras formativas generadas en paralelo al código.</div>
-        </div>
       </div>
     </div>
 
@@ -6470,45 +6494,43 @@ body {
   // ============ DATOS REALES DEL EXCEL ============
   // Por nivel: AS IS (fijo) + incrementos por mes en F1 + total final F2
   //
-  // Foundational: AS IS 13 → +91 en F1 → +0 F2 = 104 final
-  //   Por mes: May 80, Jun 6, Jul 0, Ago 2, Sep 1, Oct 0, Nov 0, Dic 2 (sumas: CDL + GAIL)
+  // Foundational: AS IS 13 → +90 en F1 → +0 F2 = 103 final
+  //   Por mes: Jun 80, Jul 6, Ago 2, Sep 0, Oct 0, Nov 0, Dic 2 (sumas: CDL + GAIL)
   // Associate: AS IS 15 → +14 en F1 → +25 F2 = 54 final
-  //   Por mes: May 0, Jun 5, Jul 0, Ago 3, Sep 0, Oct 1, Nov 0, Dic 5
+  //   Por mes: Jun 0, Jul 5, Ago 3, Sep 0, Oct 1, Nov 0, Dic 5
   // Professional: AS IS 11 → +12 en F1 → +122 F2 = 145 final
-  //   Por mes: May 0, Jun 3, Jul 3, Ago 1, Sep 0, Oct 0, Nov 0, Dic 5
-  // Total: AS IS 39 → +117 F1 → +147 F2 = 303 final
-  //   Por mes: May 80, Jun 14, Jul 3, Ago 6, Sep 1, Oct 1, Nov 0, Dic 12
+  //   Por mes: Jun 0, Jul 6, Ago 1, Sep 0, Oct 0, Nov 0, Dic 5
+  // Total: AS IS 39 → +116 F1 → +147 F2 = 302 final
+  //   Por mes: Jun 80, Jul 17, Ago 6, Sep 0, Oct 1, Nov 0, Dic 12
 
-  // monthDeltas[i] = incrementos al cerrar el mes i (i=0 May, i=7 Dic)
+  // monthDeltas[i] = incrementos al cerrar el mes i (i=0 Jun, i=6 Dic)
   // Cada array: [foundational, associate, professional, total]
   const ASIS = [13, 15, 11, 39];
   const F2_FINAL = [0, 25, 122, 147];
-  const F2_TOTAL = [104, 54, 145, 303]; // AS IS + F1 + F2
+  const F2_TOTAL = [103, 54, 145, 302]; // AS IS + F1 + F2
 
   // Estado acumulado al cerrar cada mes de Fase 1
   const monthState = [
     [13, 15, 11, 39],    // Abril (AS IS puro)
-    [93, 15, 11, 119],   // Mayo: Foundational+80, Total+80
-    [99, 20, 14, 133],   // Junio: F+6, A+5, P+3, T+14
-    [99, 20, 17, 136],   // Julio: P+3, T+3
+    [93, 15, 11, 119],   // Junio: F+80, T+80 (arranque masivo)
+    [99, 20, 17, 136],   // Julio: F+6, A+5, P+6, T+17
     [101, 23, 18, 142],  // Agosto: F+2, A+3, P+1, T+6
-    [102, 23, 18, 143],  // Sept: F+1, T+1
-    [102, 24, 18, 144],  // Octubre: A+1, T+1
-    [102, 24, 18, 144],  // Noviembre: nada
-    [104, 29, 23, 156],  // Diciembre: F+2, A+5, P+5, T+12 → cierre Fase 1
+    [101, 23, 18, 142],  // Sept: nada
+    [101, 24, 18, 143],  // Octubre: A+1, T+1
+    [101, 24, 18, 143],  // Noviembre: nada
+    [103, 29, 23, 155],  // Diciembre: F+2, A+5, P+5, T+12 → cierre Fase 1
   ];
 
   const months = [
     { name: 'Abril',      trigger: 0.00, narrative: '<strong>Hoy.</strong> Partimos con 39 certificaciones: 13 Foundational, 15 Associate y 11 Professional.' },
-    { name: 'Mayo',       trigger: 0.04, narrative: '<strong>Mayo:</strong> arrancan <em>80 personas</em> con Cloud Digital Leader (34) + Generative AI Leader (46). Base GenAI desplegada.' },
-    { name: 'Junio',      trigger: 0.13, narrative: '<strong>Junio:</strong> <em>14 exámenes</em>. Cloud Engineer, Cloud Architect y los primeros Machine Learning Engineer.' },
-    { name: 'Julio',      trigger: 0.22, narrative: '<strong>Julio:</strong> <em>3 exámenes</em> · refuerzo en Cloud Developer y Cloud Network Engineer.' },
-    { name: 'Agosto',     trigger: 0.31, narrative: '<strong>Agosto:</strong> <em>6 exámenes</em>. Llegan los Data Practitioner y refuerzos en CDL, GAIL, ML.' },
-    { name: 'Septiembre', trigger: 0.40, narrative: '<strong>Septiembre:</strong> <em>1 examen</em> · refuerzo puntual en Foundational.' },
-    { name: 'Octubre',    trigger: 0.49, narrative: '<strong>Octubre:</strong> <em>1 examen</em> de refuerzo en Cloud Engineer.' },
-    { name: 'Noviembre',  trigger: 0.58, narrative: '<strong>Noviembre:</strong> preparación intensiva del cierre de Fase 1.' },
-    { name: 'Diciembre',  trigger: 0.67, narrative: '<strong>Diciembre:</strong> <em>12 exámenes</em>. Cierre de Fase 1: 156 certificaciones acumuladas.' },
-    { name: 'Fase 2',     trigger: 0.85, narrative: '<strong>Fase 2 · Escala:</strong> <em>147 certificaciones</em> que escalan Professional. Objetivo final: 303.' }
+    { name: 'Junio',      trigger: 0.05, narrative: '<strong>Junio:</strong> arrancan <em>80 personas</em> con Cloud Digital Leader y Generative AI Leader. Base GenAI desplegada.' },
+    { name: 'Julio',      trigger: 0.15, narrative: '<strong>Julio:</strong> <em>17 exámenes</em>. Cloud Engineer, Cloud Architect, los primeros Machine Learning Engineer y Cloud Developer.' },
+    { name: 'Agosto',     trigger: 0.25, narrative: '<strong>Agosto:</strong> <em>6 exámenes</em>. Llegan los Data Practitioner y refuerzos en CDL, GAIL, ML.' },
+    { name: 'Septiembre', trigger: 0.35, narrative: '<strong>Septiembre:</strong> sin exámenes · pausa preparatoria.' },
+    { name: 'Octubre',    trigger: 0.45, narrative: '<strong>Octubre:</strong> <em>1 examen</em> de refuerzo en Cloud Engineer.' },
+    { name: 'Noviembre',  trigger: 0.55, narrative: '<strong>Noviembre:</strong> preparación intensiva del cierre de Fase 1.' },
+    { name: 'Diciembre',  trigger: 0.65, narrative: '<strong>Diciembre:</strong> <em>12 exámenes</em>. Cierre de Fase 1: 155 certificaciones acumuladas.' },
+    { name: 'Fase 2',     trigger: 0.85, narrative: '<strong>Fase 2 · Escala:</strong> <em>147 certificaciones</em> que escalan Professional. Objetivo final: 302.' }
   ];
 
   // Elementos
@@ -6532,7 +6554,7 @@ body {
   const timelineNarrative = document.getElementById('timeline-narrative');
   const monthCells = block.querySelectorAll('.timeline-month');
 
-  const TARGETS = [104, 54, 145, 303];
+  const TARGETS = [103, 54, 145, 302];
   const SUBLABELS_BASE = ['Foundational', 'Associate', 'Professional', 'Total certificaciones'];
 
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -6550,21 +6572,21 @@ body {
     const p = clamp01(p_raw / COMPLETION_POINT);
 
     // === Layout de la timeline ===
-    // === Layout de la timeline (9 columnas: 8 meses 1fr + bloque F2 1.3fr) ===
-    // Cada mes ocupa ~10.75% del ancho. Mayo centro = 5.38%, Dic centro = 80.6%, F2 centro = 93%.
-    const F1_START = 5.4;
-    const F1_END = 80.6;
+    // === Layout de la timeline (8 columnas: 7 meses 1fr + bloque F2 1.3fr) ===
+    // Cada mes ocupa ~12.05% del ancho. Junio centro = 6%, Dic centro = 78%, F2 centro = 93%.
+    const F1_START = 6;
+    const F1_END = 78;
     const F2_START = 86;
     const F2_END = 93;
 
     let nowPercent;
     if (p < 0.02) {
       nowPercent = 0;
-    } else if (p <= 0.67) {
-      const t = (p - 0.02) / (0.67 - 0.02);
+    } else if (p <= 0.65) {
+      const t = (p - 0.02) / (0.65 - 0.02);
       nowPercent = lerp(F1_START, F1_END, t);
     } else if (p <= 0.75) {
-      const t = (p - 0.67) / (0.75 - 0.67);
+      const t = (p - 0.65) / (0.75 - 0.65);
       nowPercent = lerp(F1_END, F2_START, t);
     } else {
       const t = (p - 0.75) / (1.00 - 0.75);
@@ -6573,13 +6595,13 @@ body {
 
     if (timelineNow) timelineNow.style.setProperty('--now', nowPercent + '%');
 
-    // Fill Fase 1: hasta donde está el "ahora" mientras p<=0.75, luego congelado en 81% (fin de Dic)
-    let f1Percent = Math.min(nowPercent, 81);
+    // Fill Fase 1: hasta donde está el "ahora" mientras p<=0.75, luego congelado en 79% (fin de Dic)
+    let f1Percent = Math.min(nowPercent, 79);
     if (timelineFill) timelineFill.style.setProperty('--fill', f1Percent + '%');
 
-    // Fill Fase 2 fantasma: aparece cuando p > 0.67
-    if (p > 0.67) {
-      const f2WidthPercent = Math.max(81, nowPercent);
+    // Fill Fase 2 fantasma: aparece cuando p > 0.65
+    if (p > 0.65) {
+      const f2WidthPercent = Math.max(79, nowPercent);
       if (timelineFillF2) timelineFillF2.style.width = f2WidthPercent + '%';
     } else {
       if (timelineFillF2) timelineFillF2.style.width = '0%';
@@ -6608,20 +6630,20 @@ body {
     if (timelineNarrative) timelineNarrative.innerHTML = currentMonth.narrative;
 
     // Marcar meses pasados + el mes "actual" (donde está el indicador "ahora")
-    // currentMonthIdx 0 = Abril (antes de Mayo), 1..8 = Mayo..Diciembre, 9 = Fase 2
-    // Los monthCells van de 0..8 correspondiendo a Mayo..Diciembre + Fase 2.
+    // currentMonthIdx 0 = Abril (antes de Junio), 1..7 = Junio..Diciembre, 8 = Fase 2
+    // Los monthCells van de 0..7 correspondiendo a Junio..Diciembre + Fase 2.
     // Equivalencia: monthCells[i] ↔ months[i+1]
     monthCells.forEach((cell, idx) => {
       let monthPos;
-      if (idx < 8) {
-        monthPos = F1_START + (idx * ((F1_END - F1_START) / 7));
+      if (idx < 7) {
+        monthPos = F1_START + (idx * ((F1_END - F1_START) / 6));
       } else {
         monthPos = F2_END;
       }
       if (nowPercent >= monthPos - 1) cell.classList.add('passed');
       else cell.classList.remove('passed');
 
-      // Mes "actual": el currentMonthIdx 1..9 mapea a monthCells 0..8
+      // Mes "actual": el currentMonthIdx 1..8 mapea a monthCells 0..7
       if (currentMonthIdx >= 1 && (currentMonthIdx - 1) === idx) {
         cell.classList.add('is-current');
       } else {
@@ -6632,18 +6654,18 @@ body {
     // Interpolar KPIs
     let currentState, nextState, transitionT;
 
-    if (currentMonthIdx < 8) {
+    if (currentMonthIdx < 7) {
       currentState = monthState[currentMonthIdx];
       nextState = monthState[currentMonthIdx + 1];
       const currentTrigger = months[currentMonthIdx].trigger;
       const nextTrigger = months[currentMonthIdx + 1].trigger;
       transitionT = (p - currentTrigger) / (nextTrigger - currentTrigger);
       transitionT = clamp01(transitionT);
-    } else if (currentMonthIdx === 8) {
-      currentState = monthState[8];
+    } else if (currentMonthIdx === 7) {
+      currentState = monthState[7];
       nextState = F2_TOTAL;
-      const currentTrigger = months[8].trigger;
-      const nextTrigger = months[9].trigger;
+      const currentTrigger = months[7].trigger;
+      const nextTrigger = months[8].trigger;
       transitionT = (p - currentTrigger) / (nextTrigger - currentTrigger);
       transitionT = clamp01(transitionT);
     } else {
@@ -6780,11 +6802,11 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'foundational-f1': {
       title: 'Foundational · Fase 1',
-      total: 91,
+      total: 90,
       phase: 'f1',
       certs: [
         { name: 'Generative AI Leader', count: 54 },
-        { name: 'Cloud Digital Leader', count: 37 }
+        { name: 'Cloud Digital Leader', count: 36 }
       ]
     },
     'associate-asis': {
@@ -6860,10 +6882,10 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     'total-f1': {
       title: 'Fase 1 · Total',
-      total: 117,
+      total: 116,
       phase: 'f1',
       certs: [
-        { name: 'Foundational', count: 91 },
+        { name: 'Foundational', count: 90 },
         { name: 'Associate', count: 14 },
         { name: 'Professional', count: 12 }
       ]
